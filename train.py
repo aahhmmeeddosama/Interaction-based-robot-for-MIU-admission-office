@@ -5,13 +5,12 @@ from keras.layers import Conv2D, MaxPooling2D, ZeroPadding2D
 # from keras.layers.normalization import BatchNormalization
 from keras.preprocessing.image import ImageDataGenerator
 
-# MobileNet is designed to work with images of dim 224,224
+
 img_rows, img_cols = 224, 224
 
 MobileNet = MobileNet(weights='imagenet', include_top=False, input_shape=(img_rows, img_cols, 3))
 
-# Here we freeze the last 4 layers
-# Layers are set to trainable as True by default
+
 
 for layer in MobileNet.layers:
     layer.trainable = True
@@ -22,8 +21,7 @@ for (i, layer) in enumerate(MobileNet.layers):
 
 
 def addTopModelMobileNet(bottom_model, num_classes):
-    """creates the top or head of the model that will be
-    placed ontop of the bottom layers"""
+
 
     top_model = bottom_model.output
     top_model = GlobalAveragePooling2D()(top_model)
