@@ -1,0 +1,234 @@
+{
+        "intents": [
+                {
+                        "tag": "greeting",
+                        "patterns": [
+                                "Hi there",
+                                "How are you",
+                                "Is anyone there?",
+                                "Hey",
+                                "Hola",
+                                "Hello",
+                                "Good day"
+                        ],
+                        "responses": [
+                                "Hello, How can i help you?",
+                                "Hello, you need some help?",
+                                "Hi there, how can I help?"
+                        ]
+                },
+                {
+                        "tag": "Studying",
+                        "patterns": [
+                                "where i can study in quite place",
+                                "I want to use the computer"
+                        ],
+                        "responses": [
+                                "You can go to the library",
+                                "In the library it is located in last floor of the main building",
+                                "In library it is located in last floor of the N building"
+                        ]
+                },
+                {
+                        "tag": "Injured",
+                        "patterns": [
+                                "I am injured where i can go",
+                                "I am having a headache",
+                                "I feel that i am not stable"
+                        ],
+                        "responses": [
+                                "You have to go to the clinc",
+                                "Go to the clinc at the main building first floor",
+                                "Tell the doctor or nurse found at the clinc "
+                        ]
+                },
+                {
+                        "tag": "goodbye",
+                        "patterns": [
+                                "Bye",
+                                "See you later",
+                                "Goodbye",
+                                "Nice chatting to you, bye",
+                                "Till next time"
+                        ],
+                        "responses": [
+                                "See you!",
+                                "Have a nice day",
+                                "Bye! Come back again soon."
+                        ]
+                },
+                {
+                        "tag": "thanks",
+                        "patterns": [
+                                "Thanks",
+                                "Thank you",
+                                "That's helpful",
+                                "Awesome, thanks",
+                                "Thanks for helping me"
+                        ],
+                        "responses": [
+                                "Happy to help!",
+                                "Any time!",
+                                "My pleasure"
+                        ]
+                },
+                {
+                        "tag": "noanswer",
+                        "patterns": [],
+                        "responses": [
+                                "Sorry, can't understand you",
+                                "Please give me more info",
+                                "Not sure I understand"
+                        ]
+                },
+                {
+                        "tag": "options",
+                        "patterns": [
+                                "How you could help me?",
+                                "What you can do?",
+                                "What help you provide?",
+                                "How you can be helpful?",
+                                "What support is offered"
+                        ],
+                        "responses": [
+                                "I can guide you through Adverse drug reaction list, Blood pressure tracking, Hospitals and Pharmacies",
+                                "Offering support for Adverse drug reaction, Blood pressure, Hospitals and Pharmacies"
+                        ]
+                },
+                {
+                        "tag": "adverse_drug",
+                        "patterns": [
+                                "How to check Adverse drug reaction?",
+                                "Open adverse drugs module",
+                                "Give me a list of drugs causing adverse behavior",
+                                "List all drugs suitable for patient with adverse reaction",
+                                "Which drugs dont have adverse reaction?"
+                        ],
+                        "responses": [
+                                "Navigating to Adverse drug reaction module"
+                        ]
+                },
+                {
+                        "tag": "blood_pressure",
+                        "patterns": [
+                                "Open blood pressure module",
+                                "Task related to blood pressure",
+                                "Blood pressure data entry",
+                                "I want to log blood pressure results",
+                                "Blood pressure data management"
+                        ],
+                        "responses": [
+                                "Navigating to Blood Pressure module"
+                        ]
+                },
+                {
+                        "tag": "blood_pressure_search",
+                        "patterns": [
+                                "I want to search for blood pressure result history",
+                                "Blood pressure for patient",
+                                "Load patient blood pressure result",
+                                "Show blood pressure results for patient",
+                                "Find blood pressure results by ID"
+                        ],
+                        "responses": [
+                                "Please provide Patient ID",
+                                "Patient ID?"
+                        ]
+                },
+                {
+                        "tag": "search_blood_pressure_by_patient_id",
+                        "patterns": [],
+                        "responses": [
+                                "Loading Blood pressure result for Patient"
+                        ]
+                },
+                {
+                        "tag": "pharmacy_search",
+                        "patterns": [
+                                "Find me a pharmacy",
+                                "Find pharmacy",
+                                "List of pharmacies nearby",
+                                "Locate pharmacy",
+                                "Search pharmacy"
+                        ],
+                        "responses": [
+                                "Please provide pharmacy name"
+                        ]
+                },
+                {
+                        "tag": "search_pharmacy_by_name",
+                        "patterns": [],
+                        "responses": [
+                                "Loading pharmacy details"
+                        ]
+                },
+                {
+                        "tag": "hospital_search",
+                        "patterns": [
+                                "Lookup for hospital",
+                                "Searching for hospital to transfer patient",
+                                "I want to search hospital data",
+                                "Hospital lookup for patient",
+                                "Looking up hospital details"
+                        ],
+                        "responses": [
+                                "Please provide hospital name or location"
+                        ]
+                },
+                {
+                        "tag": "search_hospital_by_params",
+                        "patterns": [],
+                        "responses": [
+                                "Please provide hospital type"
+                        ]
+                },
+                {
+                        "tag": "Apply",
+                        "patterns": [
+                                "How can i apply at MIU?",
+                                "How to apply?",
+                                "I want to know the applying steps?"
+                        ],
+                        "responses": [
+                                "Through online application using our official website http://www.miuegypt.edu.eg/",
+                                "online application through MIU official website http://www.miuegypt.edu.eg/",
+                                "Visit MIU official website http://www.miuegypt.edu.eg/ and press \n Apply to start your online application process."
+                        ]
+                },
+                {
+                        "tag": "Website",
+                        "patterns": [
+                                "Where is the application on the website?",
+                                "Can i apply online? "
+                        ],
+                        "responses": [
+                                "you visit our MIU website \n http://www.miuegypt.edu.eg/",
+                                "Visit MIU website to apply online (http://www.miuegypt.edu.eg/)"
+                        ]
+                },
+                {
+                        "tag": "Application Fees",
+                        "patterns": [
+                                "What are the required fees for the application?\n",
+                                "What is application fees?",
+                                "Fees required for application and exam?"
+                        ],
+                        "responses": [
+                                "A nonrefundable amount of 1350 Egyptian pounds",
+                                "1350 Egyptian pounds",
+                                "1350 Egyptian pounds \n has to be paid by a MasterCard / Visa credit card to book a placement exam"
+                        ]
+                },
+                {
+                        "tag": "Paying",
+                        "patterns": [
+                                "how to pay?",
+                                "can i pay by MasterCard / Visa credit card ? "
+                        ],
+                        "responses": [
+                                "You can pay by MasterCard / Visa credit card",
+                                "for sure you can pay using your cards (MasterCard / Visa credit card)"
+                        ]
+                }
+        ]
+}
