@@ -73,7 +73,7 @@
                         ]
                 },
                 {
-                        "tag": "noanswer",
+                        "tag": "no answer",
                         "patterns": [],
                         "responses": [
                                 "Sorry, can't understand you",
@@ -228,6 +228,14 @@
                         "responses": [
                                 "You can pay by MasterCard / Visa credit card",
                                 "for sure you can pay using your cards (MasterCard / Visa credit card)"
+                        ]
+                },
+                {
+                        "tag": "",
+                        "patterns": [
+                                ""
+                        ],
+                        "responses": [
                         ]
                 }
         ]
