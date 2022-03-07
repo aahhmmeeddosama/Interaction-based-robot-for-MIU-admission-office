@@ -1,8 +1,0 @@
-it's api documentation which used:
-https://docs.microsoft.com/en-us/python/api/azure-cognitiveservices-vision-face/azure.cognitiveservices.vision.face.operations.faceoperations?view=azure-python
------------------------------------------
-
-you need to install following packages, run it on terminal:
-pip install azure-cognitiveservices-vision-computervision
-pip install --upgrade azure-cognitiveservices-vision-face
-pip install Pillow  OR   python3 -m pip install Pillow
