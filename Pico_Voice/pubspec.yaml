@@ -1,0 +1,29 @@
+name: pico_clock
+description: A voice-controlled clock app.
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  intl: ^0.17.0
+  path_provider: ^2.0.1
+  picovoice_flutter: ^2.1.0
+  flutter_ringtone_player: ^3.0.0  
+  fluttertoast: ^8.0.7
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  lints: ^1.0.1
+
+flutter:
+  uses-material-design: true
+  assets:
+      - assets/android/hey-pepper_en_android.ppn
+      - assets/android/clock_en_android.rhn
