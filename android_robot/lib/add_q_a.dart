@@ -36,6 +36,7 @@ class _State extends State<Add_Q_A> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Add to flutter'),
+          backgroundColor: Colors.red[700],
         ),
         body: Padding(
             padding: EdgeInsets.all(15),
@@ -57,9 +58,12 @@ class _State extends State<Add_Q_A> {
 
 
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Tag',
-                      hintText: 'Add',
+                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
+                        borderSide:  BorderSide(color: Colors.red ),),                      labelText: 'Tag',
+                      hintText: 'Add Tag',
+                      labelStyle: TextStyle(
+                        color: Colors.black54,
+                      ),
                     ),
                   ),
                 ),
@@ -70,9 +74,13 @@ class _State extends State<Add_Q_A> {
 
 //                      url +='&tag=' + value.toString();
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
+                        borderSide:  BorderSide(color: Colors.red ),),
                       labelText: 'Pattern',
-                      hintText: 'Add Question',
+                      hintText: 'Add Pattern',
+                      labelStyle: TextStyle(
+                        color: Colors.black54,
+                      ),
                     ),
                   ),
                 ),
@@ -80,12 +88,13 @@ class _State extends State<Add_Q_A> {
                   padding: EdgeInsets.all(15),
                   child: TextField(
                     controller: myController3,
-//url +='&pattern=' + value.toString();
-                    obscureText: true,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Response',
+                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
+                        borderSide:  BorderSide(color: Colors.red ),),                      labelText: 'Response',
                       hintText: 'Enter answer for the question',
+                      labelStyle: TextStyle(
+                        color: Colors.black54,
+                      ),
                     ),
                   ),
                 ),

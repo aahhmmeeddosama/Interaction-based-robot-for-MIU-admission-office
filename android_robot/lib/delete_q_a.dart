@@ -17,7 +17,8 @@ class _State extends State<Delete_Q_A> {
   Widget build(BuildContext context) {  
     return Scaffold(  
         appBar: AppBar(  
-          title: Text('Delete to flutter'),  
+          title: Text('Delete to flutter'),
+          backgroundColor: Colors.red[700],
         ),  
         body: Padding(
             padding: EdgeInsets.all(15),  
@@ -39,9 +40,13 @@ class _State extends State<Delete_Q_A> {
                       url = 'http://192.168.1.11:8003/bot?delete=' + value.toString();
                     },
 
-                    decoration: InputDecoration(  
-                      border: OutlineInputBorder(),  
-                      labelText: 'Delete tag',  
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
+                        borderSide:  BorderSide(color: Colors.red ),),
+                      labelText: 'Delete tag',
+                        labelStyle: TextStyle(
+                          color: Colors.red[700],
+                        ),
 
                     ),  
                   ),  

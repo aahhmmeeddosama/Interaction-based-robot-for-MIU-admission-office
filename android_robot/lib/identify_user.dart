@@ -42,7 +42,7 @@ class _IdentifyUserState extends State<IdentifyUser> {
     final resjson= res.body;
     message =resjson;
     setState(() {});
-    if (message=="Ahmed")
+    if (message=="addmision")
       Navigator.push(context, MaterialPageRoute(builder: (context)=>  Admission()));
 
     else
@@ -53,6 +53,7 @@ class _IdentifyUserState extends State<IdentifyUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.red,
       ),
       body: Center(
         child: Column(
@@ -62,13 +63,22 @@ class _IdentifyUserState extends State<IdentifyUser> {
             selectImage==null? Text("please pick image to uploade"): Image.file(selectImage!),
             TextButton.icon(
                 onPressed: uploadImage,
-                icon: Icon(Icons.upload_file),
-                label: Text("upload")
+                icon: Icon(
+                  Icons.upload_file,
+                  color:Colors.red,
+                ),
+                label: Text("upload"),
+              style:TextButton.styleFrom(
+                primary: Colors.red,
+              ),
+
+
+
             )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: getImage,child: Icon(Icons.add_a_photo),),
+      floatingActionButton: FloatingActionButton(onPressed: getImage,child: Icon(Icons.add_a_photo ,color:Colors.white),backgroundColor: Colors.red,),
     );
 
   }

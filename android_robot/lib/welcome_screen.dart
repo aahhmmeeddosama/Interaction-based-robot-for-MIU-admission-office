@@ -5,8 +5,6 @@ import 'identify_user.dart';
 import 'package:flutter_speech/flutter_speech.dart';
 
 
-
-
 const languages = const [
   const Language('Arabic', 'ar-EG'),
   const Language('English', 'en-US'),
@@ -27,13 +25,9 @@ class Welcome_screen extends StatefulWidget {
 
 class _Welcome_screenState extends State<Welcome_screen> {
   late SpeechRecognition _speech;
-
   bool _speechRecognitionAvailable = true;
-
   bool _isListening = true;
-
   String transcription = '';
-
   Language selectedLang = languages.last;
 
   @override
@@ -43,19 +37,6 @@ class _Welcome_screenState extends State<Welcome_screen> {
     super.initState();
   }
 
-  void activateSpeechRecognizer() {
-    print('_MyAppState.activateSpeechRecognizer... ');
-    _speech = SpeechRecognition();
-    _speech.setAvailabilityHandler(onSpeechAvailability);
-    _speech.setRecognitionStartedHandler(onRecognitionStarted);
-    _speech.setRecognitionResultHandler(onRecognitionResult);
-    _speech.setRecognitionCompleteHandler(onRecognitionComplete);
-    _speech.setErrorHandler(errorHandler);
-    _speech.activate('en-US').then((res) {
-      setState(() => _speechRecognitionAvailable = res);
-    });
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,18 +113,15 @@ class _Welcome_screenState extends State<Welcome_screen> {
 
   void onSpeechAvailability(bool result) {
     setState(() => _speechRecognitionAvailable = result);
-    if( transcription!="hi")
-      start();
+    if( transcription=="hi") {
+      dispose();
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const IdentifyUser()));
+    }
+
     else
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> const IdentifyUser()));
+      start();
 
-
-  }
-
-  void onCurrentLocale(String locale) {
-    print('_MyAppState.onCurrentLocale... $locale');
-    setState(
-            () => selectedLang = languages.firstWhere((l) => l.code == locale));
   }
 
   void onRecognitionStarted() {
@@ -157,8 +135,28 @@ class _Welcome_screenState extends State<Welcome_screen> {
 
   void onRecognitionComplete(String text) {
     print('_MyAppState.onRecognitionComplete... $text');
-    setState(() => _isListening = true);
+    setState(() => _isListening = false);
   }
 
   void errorHandler() => activateSpeechRecognizer();
+
+  void activateSpeechRecognizer() {
+    print('_MyAppState.activateSpeechRecognizer... ');
+    _speech = SpeechRecognition();
+    _speech.setAvailabilityHandler(onSpeechAvailability);
+    _speech.setRecognitionStartedHandler(onRecognitionStarted);
+    _speech.setRecognitionResultHandler(onRecognitionResult);
+    _speech.setRecognitionCompleteHandler(onRecognitionComplete);
+    _speech.setErrorHandler(errorHandler);
+    _speech.activate(selectedLang.toString()).then((res) {
+      setState(() => _speechRecognitionAvailable = res);
+    });
+  }
+
+  void dispose() {
+    stop();
+    cancel();
+    super.dispose();
+  }
+
 }
