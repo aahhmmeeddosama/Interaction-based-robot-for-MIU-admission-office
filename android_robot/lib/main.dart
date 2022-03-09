@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
       title: 'MIU ADMISSION',
       //home: TTS(),
       //home: SpeechScreen(),
-      //home: Admission(),
+      home: Admission(),
       //home: ChatBot(),
-      home: Welcome_screen(),
+      //home: Welcome_screen(),
       //home:IdentifyUser()
       //home: Staff(),
       // home: Add(),

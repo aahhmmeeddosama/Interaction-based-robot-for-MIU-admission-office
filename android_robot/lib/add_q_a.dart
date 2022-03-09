@@ -36,6 +36,7 @@ class _State extends State<Add_Q_A> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Add to flutter'),
+          backgroundColor: Color.fromARGB(255, 189, 14, 14), 
         ),
         body: Padding(
             padding: EdgeInsets.all(15),
@@ -50,6 +51,12 @@ class _State extends State<Add_Q_A> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
+                Padding(
+            padding: const EdgeInsets.fromLTRB(30, 10, 50, 20),
+            child: Image.asset('assets/images/logo_miu.png'),
+          ),
+                
                 Padding(
                   padding: EdgeInsets.all(15),
                   child: TextField(
@@ -58,7 +65,7 @@ class _State extends State<Add_Q_A> {
 
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Tag',
+                      labelText: 'Add Tag',
                       hintText: 'Add',
                     ),
                   ),
@@ -86,7 +93,10 @@ class _State extends State<Add_Q_A> {
                       border: OutlineInputBorder(),
                       labelText: 'Response',
                       hintText: 'Enter answer for the question',
+                      
+                      
                     ),
+                    
                   ),
                 ),
 
@@ -95,6 +105,7 @@ class _State extends State<Add_Q_A> {
                     primary: Colors.red[700], // background
                     onPrimary: Colors.white, // foreground
                     minimumSize: Size(200,50),
+                    shape: StadiumBorder(),
                   ),
                   onPressed: () async {
                     myController1;
@@ -113,7 +124,7 @@ class _State extends State<Add_Q_A> {
                       QueryText = Data['delete'] ;
                     });*/
                   },
-                  child: Text('Submit'),
+                  child: Text('Submit',style: TextStyle(fontSize: 20)),
                 )
               ],
             )

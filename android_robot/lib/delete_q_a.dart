@@ -17,7 +17,8 @@ class _State extends State<Delete_Q_A> {
   Widget build(BuildContext context) {  
     return Scaffold(  
         appBar: AppBar(  
-          title: Text('Delete to flutter'),  
+          title: Text('Delete to flutter'), 
+          backgroundColor: Color.fromARGB(255, 189, 14, 14), 
         ),  
         body: Padding(
             padding: EdgeInsets.all(15),  
@@ -32,6 +33,10 @@ class _State extends State<Delete_Q_A> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  Padding(
+            padding: const EdgeInsets.fromLTRB(30, 10, 50, 20),
+            child: Image.asset('assets/images/logo_miu.png'),
+          ),
                 Padding(  
                   padding: EdgeInsets.all(15),  
                   child: TextField(
@@ -41,24 +46,22 @@ class _State extends State<Delete_Q_A> {
 
                     decoration: InputDecoration(  
                       border: OutlineInputBorder(),  
-                      labelText: 'Delete tag',  
+                      labelText: 'write tag that you want to delete',  
 
                     ),  
                   ),  
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    QueryText,
-                    style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-                  ),
-                ),/////////////
+                
+               
 
                 ElevatedButton(
+                  
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red[700], // background
                           onPrimary: Colors.white, // foreground
                            minimumSize: Size(200,50),
+                           shape: StadiumBorder(),
+                           
                         ),
                         onPressed: () async {
                           Data = await Getdata(url);
@@ -68,7 +71,7 @@ class _State extends State<Delete_Q_A> {
                           });
                         },
 
-                        child: Text('Submit'),
+                        child: Text('Delete',style: TextStyle(fontSize: 20)),
                       )
               ],
             )

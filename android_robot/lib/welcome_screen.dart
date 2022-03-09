@@ -4,9 +4,6 @@ import 'chatbot.dart';
 import 'identify_user.dart';
 import 'package:flutter_speech/flutter_speech.dart';
 
-
-
-
 const languages = const [
   const Language('Arabic', 'ar-EG'),
   const Language('English', 'en-US'),
@@ -20,7 +17,6 @@ class Language {
 }
 
 class Welcome_screen extends StatefulWidget {
-
   @override
   State<Welcome_screen> createState() => _Welcome_screenState();
 }
@@ -54,19 +50,15 @@ class _Welcome_screenState extends State<Welcome_screen> {
     _speech.activate('en-US').then((res) {
       setState(() => _speechRecognitionAvailable = res);
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
-
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
             child: Text(
@@ -83,11 +75,10 @@ class _Welcome_screenState extends State<Welcome_screen> {
             padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
             child: Image.asset('assets/images/logo_miu.png'),
           ),
-
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
             child: Text(
-              ' say:  "HI ROBOT"',
+              ' say:  "Hey Pepper"',
               style: TextStyle(
                 fontSize: 25.0,
                 fontFamily: "arial",
@@ -96,17 +87,17 @@ class _Welcome_screenState extends State<Welcome_screen> {
               ),
             ),
           ),
-
           Padding(
               padding: const EdgeInsets.fromLTRB(20, 150, 20, 20),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red[700], // background
                   onPrimary: Colors.white, // foreground
-                  minimumSize: Size(200,50),
+                  minimumSize: Size(200, 50),
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const ChatBot()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const ChatBot()));
                 },
                 child: Text('start'),
               )),
@@ -116,34 +107,33 @@ class _Welcome_screenState extends State<Welcome_screen> {
   }
 
   void start() => _speech.activate(selectedLang.code).then((_) {
-    return _speech.listen().then((result) {
-      setState(() {
-        _isListening = result;
+        return _speech.listen().then((result) {
+          setState(() {
+            _isListening = result;
+          });
+        });
       });
-    });
-  });
 
   void cancel() =>
       _speech.cancel().then((_) => setState(() => _isListening = false));
 
   void stop() => _speech.stop().then((_) {
-    setState(() => _isListening = false);
-  });
+        setState(() => _isListening = false);
+      });
 
   void onSpeechAvailability(bool result) {
     setState(() => _speechRecognitionAvailable = result);
-    if( transcription!="hi")
+    if (transcription != "hey")
       start();
     else
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> const IdentifyUser()));
-
-
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const IdentifyUser()));
   }
 
   void onCurrentLocale(String locale) {
     print('_MyAppState.onCurrentLocale... $locale');
     setState(
-            () => selectedLang = languages.firstWhere((l) => l.code == locale));
+        () => selectedLang = languages.firstWhere((l) => l.code == locale));
   }
 
   void onRecognitionStarted() {
