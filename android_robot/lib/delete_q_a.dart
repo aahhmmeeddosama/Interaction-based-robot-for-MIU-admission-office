@@ -46,18 +46,20 @@ class _State extends State<Delete_Q_A> {
 
                     decoration: InputDecoration(  
                       border: OutlineInputBorder(),  
-                      labelText: 'write the tag that you want to delete',  
+                      labelText: 'write tag that you want to delete',  
 
                     ),  
                   ),  
                 ),
+                
+               
 
                 ElevatedButton(
                   
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red[700], // background
                           onPrimary: Colors.white, // foreground
-                           minimumSize: Size(200,50),
+                           minimumSize: Size(120,50),
                            shape: StadiumBorder(),
                            
                         ),
@@ -74,6 +76,7 @@ class _State extends State<Delete_Q_A> {
               ],
             )
         ) ,
+
     );  
   }  
 } 

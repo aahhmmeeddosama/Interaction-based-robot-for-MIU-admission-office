@@ -72,11 +72,37 @@ class _Welcome_screenState extends State<Welcome_screen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
+            padding: const EdgeInsets.fromLTRB(30, 50, 50, 20),
             child: Image.asset('assets/images/logo_miu.png'),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+           Padding(
+              padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red[700], // background
+                  onPrimary: Colors.white, // foreground
+                  minimumSize: Size(170, 50),
+                   shape: StadiumBorder(),
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(_createRoute());
+                },
+                child: Text('Start',style: TextStyle(fontSize: 20)),
+              )),
+               Padding(
+            padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+            child: Text(
+              'Or',
+              style: TextStyle(
+                fontSize: 25.0,
+                fontFamily: "arial",
+                color: Colors.red[700],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+              Padding(
+            padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
             child: Text(
               ' say:  "Hey Pepper"',
               style: TextStyle(
@@ -86,21 +112,8 @@ class _Welcome_screenState extends State<Welcome_screen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-          Padding(
-              padding: const EdgeInsets.fromLTRB(20, 150, 20, 20),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red[700], // background
-                  onPrimary: Colors.white, // foreground
-                  minimumSize: Size(200, 50),
-                ),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const ChatBot()));
-                },
-                child: Text('start'),
-              )),
+          )
+
         ]),
       ),
     );
@@ -151,4 +164,21 @@ class _Welcome_screenState extends State<Welcome_screen> {
   }
 
   void errorHandler() => activateSpeechRecognizer();
+}
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const ChatBot(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.5, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.easeInCirc;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }

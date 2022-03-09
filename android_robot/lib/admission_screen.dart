@@ -33,12 +33,12 @@ class Admission extends StatelessWidget {
           SizedBox(height: 80,),
                   Row(
                     children: [
-                      SizedBox(width: 80,),
+                      SizedBox(width: 10,),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red[700], // background
                           onPrimary: Colors.white, // foreground
-                          minimumSize: Size(200,50),
+                          minimumSize: Size(100,50),
                           shape: StadiumBorder(),
                         ),
                         onPressed: () {
@@ -52,7 +52,7 @@ class Admission extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red[700], // background
                           onPrimary: Colors.white, // foreground
-                          minimumSize: Size(200,50),
+                          minimumSize: Size(100,50),
                           shape: StadiumBorder(),
                         ),
                         onPressed: () {
@@ -65,7 +65,7 @@ class Admission extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red[700], // background
                           onPrimary: Colors.white,
-                          minimumSize: Size(200,50),// foreground
+                          minimumSize: Size(100,50),// foreground
                           shape: StadiumBorder(),
                         ),
                         onPressed: () {
@@ -88,7 +88,7 @@ Route _createRoute() {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => const  Add_Q_A(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
+      const begin = Offset(0.5, 0.0);
       const end = Offset.zero;
       const curve = Curves.easeInCirc;
 
@@ -106,7 +106,7 @@ Route _createRoute2() {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => Edit_Q_A(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
+      const begin = Offset(0.5, 0.0);
       const end = Offset.zero;
       const curve = Curves.easeInCirc;
 
@@ -124,7 +124,7 @@ Route _createRoute3() {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) =>  Delete_Q_A(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
+      const begin = Offset(0.5, 0.0);
       const end = Offset.zero;
       const curve = Curves.easeInCirc;
 

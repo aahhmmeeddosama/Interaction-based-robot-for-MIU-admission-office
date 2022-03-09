@@ -40,6 +40,11 @@ class _ChatBotState extends State<ChatBot> {
   void activateSpeechRecognizer() {
     _speech = SpeechRecognition();
   }
+
+
+
+
+
   ///////////////////////////////////////////////////////////////
   final GlobalKey<AnimatedListState> _listkey = GlobalKey();
   final List<String> _data = [];
@@ -63,6 +68,11 @@ class _ChatBotState extends State<ChatBot> {
 
   get isPlaying => ttsState == TtsState.playing;
 
+  //////////////////////////////////////////////
+
+
+
+
   @override
   initState() {
     super.initState();
@@ -81,6 +91,7 @@ class _ChatBotState extends State<ChatBot> {
     });
 
   }
+
 
   Future _speak(String message) async {
     await flutterTts.setVolume(volume);
@@ -116,6 +127,8 @@ class _ChatBotState extends State<ChatBot> {
     flutterTts.stop();
   }
 
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -147,7 +160,7 @@ class _ChatBotState extends State<ChatBot> {
                     decoration: InputDecoration(
                       icon: Icon(
                         Icons.message,
-                        color: Colors.red,
+                        color: Color.fromARGB(255, 219, 23, 9),
                       ),
                       suffixIcon: IconButton(
                         onPressed: () async {
@@ -159,9 +172,9 @@ class _ChatBotState extends State<ChatBot> {
                           getResponse(mesageSend);
 
                         },
-                        icon: Icon(Icons.mic, color: Colors.red),
+                        icon: Icon(Icons.mic, color: Color.fromARGB(255, 219, 26, 12)),
                       ),
-                      hintText: "Text Here",
+                      hintText: "Type Here",
                       fillColor: Colors.white12,
                     ),
                     controller: queryController,
@@ -216,6 +229,8 @@ class _ChatBotState extends State<ChatBot> {
   http.Client getClient() {
     return http.Client();
   }
+
+
 }
 
 Widget buildItem(String item, Animation animation, int index) {
@@ -232,7 +247,7 @@ Widget buildItem(String item, Animation animation, int index) {
             item.replaceAll("<bot>", ""),
             style: TextStyle(color: mine ? Colors.white : Colors.black),
           ),
-          color: mine ? Colors.red : Colors.grey[200],
+          color: mine ? Color.fromARGB(255, 214, 22, 8) : Colors.grey[200],
           padding: const BubbleEdges.all(10),
         ),
       ),
