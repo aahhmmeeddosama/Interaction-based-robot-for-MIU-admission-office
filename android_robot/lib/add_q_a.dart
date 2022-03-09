@@ -20,8 +20,6 @@ class _State extends State<Add_Q_A> {
   final myController2 = TextEditingController();
   final myController3 = TextEditingController();
 
-
-
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -65,7 +63,7 @@ class _State extends State<Add_Q_A> {
 
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Add Tag',
+                      labelText: 'Add the Tag',
                       hintText: 'Add',
                     ),
                   ),
@@ -79,7 +77,7 @@ class _State extends State<Add_Q_A> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Pattern',
-                      hintText: 'Add Question',
+                      hintText: 'Add the Question',
                     ),
                   ),
                 ),
@@ -92,9 +90,7 @@ class _State extends State<Add_Q_A> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Response',
-                      hintText: 'Enter answer for the question',
-                      
-                      
+                      hintText: 'Enter the answer of the question',
                     ),
                     
                   ),

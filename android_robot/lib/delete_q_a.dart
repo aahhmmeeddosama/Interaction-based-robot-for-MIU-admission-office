@@ -46,13 +46,11 @@ class _State extends State<Delete_Q_A> {
 
                     decoration: InputDecoration(  
                       border: OutlineInputBorder(),  
-                      labelText: 'write tag that you want to delete',  
+                      labelText: 'write the tag that you want to delete',  
 
                     ),  
                   ),  
                 ),
-                
-               
 
                 ElevatedButton(
                   
@@ -76,7 +74,6 @@ class _State extends State<Delete_Q_A> {
               ],
             )
         ) ,
-
     );  
   }  
 } 

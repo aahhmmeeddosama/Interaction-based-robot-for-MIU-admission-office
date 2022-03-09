@@ -19,8 +19,6 @@ class _State extends State<Edit_Q_A> {
   final myController3 = TextEditingController();
   final myController4 = TextEditingController();
 
-
-
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -90,7 +88,7 @@ class _State extends State<Edit_Q_A> {
                     decoration: InputDecoration(  
                       border: OutlineInputBorder(),  
                       labelText: 'pattern',
-                      hintText: 'Enter answer for the question',  
+                      hintText: 'Enter the answer of the question',  
                     ),  
                   ),  
                 ),  
@@ -102,7 +100,7 @@ class _State extends State<Edit_Q_A> {
                     obscureText: true,  
                     decoration: InputDecoration(  
                       border: OutlineInputBorder(),  
-                      labelText: 'Write response',
+                      labelText: 'response',
                       hintText: 'Optional',  
                     ),  
                   ),  
@@ -126,7 +124,6 @@ class _State extends State<Edit_Q_A> {
                     myController2.clear();
                     myController3.clear();
                     myController4.clear();
-
 
                           return setState(() {});
 

@@ -40,11 +40,6 @@ class _ChatBotState extends State<ChatBot> {
   void activateSpeechRecognizer() {
     _speech = SpeechRecognition();
   }
-
-
-
-
-
   ///////////////////////////////////////////////////////////////
   final GlobalKey<AnimatedListState> _listkey = GlobalKey();
   final List<String> _data = [];
@@ -68,11 +63,6 @@ class _ChatBotState extends State<ChatBot> {
 
   get isPlaying => ttsState == TtsState.playing;
 
-  //////////////////////////////////////////////
-
-
-
-
   @override
   initState() {
     super.initState();
@@ -91,7 +81,6 @@ class _ChatBotState extends State<ChatBot> {
     });
 
   }
-
 
   Future _speak(String message) async {
     await flutterTts.setVolume(volume);
@@ -126,8 +115,6 @@ class _ChatBotState extends State<ChatBot> {
     super.dispose();
     flutterTts.stop();
   }
-
-
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -229,8 +216,6 @@ class _ChatBotState extends State<ChatBot> {
   http.Client getClient() {
     return http.Client();
   }
-
-
 }
 
 Widget buildItem(String item, Animation animation, int index) {
