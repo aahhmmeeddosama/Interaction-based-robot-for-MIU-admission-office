@@ -4,7 +4,6 @@ import 'chatbot.dart';
 import 'identify_user.dart';
 import 'package:flutter_speech/flutter_speech.dart';
 
-
 const languages = const [
   const Language('Arabic', 'ar-EG'),
   const Language('English', 'en-US'),
@@ -18,16 +17,19 @@ class Language {
 }
 
 class Welcome_screen extends StatefulWidget {
-
   @override
   State<Welcome_screen> createState() => _Welcome_screenState();
 }
 
 class _Welcome_screenState extends State<Welcome_screen> {
   late SpeechRecognition _speech;
+
   bool _speechRecognitionAvailable = true;
+
   bool _isListening = true;
+
   String transcription = '';
+
   Language selectedLang = languages.last;
 
   @override
@@ -37,21 +39,30 @@ class _Welcome_screenState extends State<Welcome_screen> {
     super.initState();
   }
 
+  void activateSpeechRecognizer() {
+    print('_MyAppState.activateSpeechRecognizer... ');
+    _speech = SpeechRecognition();
+    _speech.setAvailabilityHandler(onSpeechAvailability);
+    _speech.setRecognitionStartedHandler(onRecognitionStarted);
+    _speech.setRecognitionResultHandler(onRecognitionResult);
+    _speech.setRecognitionCompleteHandler(onRecognitionComplete);
+    _speech.setErrorHandler(errorHandler);
+    _speech.activate('en-US').then((res) {
+      setState(() => _speechRecognitionAvailable = res);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
-
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
             child: Text(
-              'Welcome on MIU!',
+              'Welcome to MIU!',
               style: TextStyle(
                 fontSize: 45.0,
                 fontFamily: "arial",
@@ -61,14 +72,27 @@ class _Welcome_screenState extends State<Welcome_screen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
+            padding: const EdgeInsets.fromLTRB(30, 50, 50, 20),
             child: Image.asset('assets/images/logo_miu.png'),
           ),
-
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+           Padding(
+              padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red[700], // background
+                  onPrimary: Colors.white, // foreground
+                  minimumSize: Size(170, 50),
+                   shape: StadiumBorder(),
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(_createRoute());
+                },
+                child: Text('Start',style: TextStyle(fontSize: 20)),
+              )),
+               Padding(
+            padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
             child: Text(
-              ' say:  "HI ROBOT"',
+              'Or',
               style: TextStyle(
                 fontSize: 25.0,
                 fontFamily: "arial",
@@ -77,51 +101,52 @@ class _Welcome_screenState extends State<Welcome_screen> {
               ),
             ),
           ),
+              Padding(
+            padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+            child: Text(
+              ' say:  "Hey Pepper"',
+              style: TextStyle(
+                fontSize: 25.0,
+                fontFamily: "arial",
+                color: Colors.red[700],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
 
-          Padding(
-              padding: const EdgeInsets.fromLTRB(20, 150, 20, 20),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red[700], // background
-                  onPrimary: Colors.white, // foreground
-                  minimumSize: Size(200,50),
-                ),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const ChatBot()));
-                },
-                child: Text('start'),
-              )),
         ]),
       ),
     );
   }
 
   void start() => _speech.activate(selectedLang.code).then((_) {
-    return _speech.listen().then((result) {
-      setState(() {
-        _isListening = result;
+        return _speech.listen().then((result) {
+          setState(() {
+            _isListening = result;
+          });
+        });
       });
-    });
-  });
 
   void cancel() =>
       _speech.cancel().then((_) => setState(() => _isListening = false));
 
   void stop() => _speech.stop().then((_) {
-    setState(() => _isListening = false);
-  });
+        setState(() => _isListening = false);
+      });
 
   void onSpeechAvailability(bool result) {
     setState(() => _speechRecognitionAvailable = result);
-    if( transcription=="hi") {
-      dispose();
+    if (transcription != "hey")
+      start();
+    else
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const IdentifyUser()));
-    }
+  }
 
-    else
-      start();
-
+  void onCurrentLocale(String locale) {
+    print('_MyAppState.onCurrentLocale... $locale');
+    setState(
+        () => selectedLang = languages.firstWhere((l) => l.code == locale));
   }
 
   void onRecognitionStarted() {
@@ -135,28 +160,25 @@ class _Welcome_screenState extends State<Welcome_screen> {
 
   void onRecognitionComplete(String text) {
     print('_MyAppState.onRecognitionComplete... $text');
-    setState(() => _isListening = false);
+    setState(() => _isListening = true);
   }
 
   void errorHandler() => activateSpeechRecognizer();
+}
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const ChatBot(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.5, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.easeInCirc;
 
-  void activateSpeechRecognizer() {
-    print('_MyAppState.activateSpeechRecognizer... ');
-    _speech = SpeechRecognition();
-    _speech.setAvailabilityHandler(onSpeechAvailability);
-    _speech.setRecognitionStartedHandler(onRecognitionStarted);
-    _speech.setRecognitionResultHandler(onRecognitionResult);
-    _speech.setRecognitionCompleteHandler(onRecognitionComplete);
-    _speech.setErrorHandler(errorHandler);
-    _speech.activate(selectedLang.toString()).then((res) {
-      setState(() => _speechRecognitionAvailable = res);
-    });
-  }
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-  void dispose() {
-    stop();
-    cancel();
-    super.dispose();
-  }
-
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }

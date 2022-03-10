@@ -36,7 +36,7 @@ class _State extends State<Edit_Q_A> {
     return Scaffold(  
         appBar: AppBar(  
           title: Text('Edit to flutter'),
-          backgroundColor: Colors.red[700],
+          backgroundColor: Color.fromARGB(255, 189, 14, 14), 
         ),  
         body: Padding(  
             padding: EdgeInsets.all(15),  
@@ -51,6 +51,10 @@ class _State extends State<Edit_Q_A> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  Padding(
+            padding: const EdgeInsets.fromLTRB(30, 10, 50, 20),
+            child: Image.asset('assets/images/logo_miu.png'),
+          ),
                 Padding(  
                   padding: EdgeInsets.all(15),  
                   child: TextField(
@@ -58,13 +62,9 @@ class _State extends State<Edit_Q_A> {
 
 
                     decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
-                        borderSide:  BorderSide(color: Colors.red ),),
-                      labelText: 'Index',
-                      hintText: 'Write Index',
-                      labelStyle: TextStyle(
-                        color: Colors.black54,
-                      ),
+                      border: OutlineInputBorder(),  
+                      labelText: 'index',
+                      hintText: 'Add',  
                     ),  
                   ),  
                 ),  
@@ -74,14 +74,10 @@ class _State extends State<Edit_Q_A> {
                     controller: myController2,
 
 //                      url +='&tag=' + value.toString();
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
-                        borderSide:  BorderSide(color: Colors.red ),),
-                      labelText: 'Tag',
-                      hintText: 'Edit Tag',
-                      labelStyle: TextStyle(
-                        color: Colors.black54,
-                      ),
+                    decoration: InputDecoration(  
+                      border: OutlineInputBorder(),  
+                      labelText: 'tag',
+                      hintText: 'Edit Question',
                     ),  
                   ),  
                 ),  
@@ -89,15 +85,12 @@ class _State extends State<Edit_Q_A> {
                   padding: EdgeInsets.all(15),  
                   child: TextField(
                     controller: myController3,
-
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
-                        borderSide:  BorderSide(color: Colors.red ),),
-                      labelText: 'Pattern',
-                      hintText: 'Edit Pattern',
-                      labelStyle: TextStyle(
-                        color: Colors.black54,
-                      ),
+//url +='&pattern=' + value.toString();
+                    obscureText: true,  
+                    decoration: InputDecoration(  
+                      border: OutlineInputBorder(),  
+                      labelText: 'pattern',
+                      hintText: 'Enter answer for the question',  
                     ),  
                   ),  
                 ),  
@@ -105,14 +98,12 @@ class _State extends State<Edit_Q_A> {
                   padding: EdgeInsets.all(15),  
                   child: TextField(
                     controller: myController4,
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
-                        borderSide:  BorderSide(color: Colors.red ),),
-                      labelText: 'Response',
-                      hintText: 'add Response',
-                      labelStyle: TextStyle(
-                        color: Colors.black54,
-                      ),
+                    //                      url +='&response=' + value.toString()+'&context=kllk';
+                    obscureText: true,  
+                    decoration: InputDecoration(  
+                      border: OutlineInputBorder(),  
+                      labelText: 'Write response',
+                      hintText: 'Optional',  
                     ),  
                   ),  
                 ),
@@ -121,7 +112,8 @@ class _State extends State<Edit_Q_A> {
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red[700], // background
                           onPrimary: Colors.white, // foreground
-                           minimumSize: Size(200,50),
+                           minimumSize: Size(120,50),
+                           shape: StadiumBorder(),
                         ),
                   onPressed: () async {
                           myController1;
@@ -142,7 +134,7 @@ class _State extends State<Edit_Q_A> {
                       QueryText = Data['delete'] ;
                     });*/
                   },
-                        child: Text('Submit'),
+                        child: Text('Submit',style: TextStyle(fontSize: 20)),
                       )
               ],  
             )  

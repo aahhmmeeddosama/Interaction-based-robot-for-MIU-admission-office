@@ -18,9 +18,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      // home: Welcome_screen(),
+       home: Welcome_screen(),
       // home: Staff(),
-      home:Edit(),
+      // home:Edit(),
       //  home: Delete(),
     );
   }

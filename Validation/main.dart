@@ -2,7 +2,7 @@ import 'package:android_robot/admission_screen.dart';
 import 'package:android_robot/chatbot.dart';
 import 'package:flutter/material.dart';
 
-import 'identify_user.dart';
+// import 'bgrab.dart';
 import 'welcome_screen.dart';
 
 Future<void> main() async {
@@ -16,9 +16,10 @@ class MyApp extends StatelessWidget {
       title: 'MIU ADMISSION',
       //home: TTS(),
       //home: SpeechScreen(),
-      //home: Admission(),
+      home: Admission(),
+      //  home: LoginPage(),
       //home: ChatBot(),
-      home: Welcome_screen(),
+      // home: Welcome_screen(),
       //home:IdentifyUser()
       //home: Staff(),
       // home: Add(),

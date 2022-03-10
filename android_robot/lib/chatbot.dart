@@ -160,7 +160,7 @@ class _ChatBotState extends State<ChatBot> {
                     decoration: InputDecoration(
                       icon: Icon(
                         Icons.message,
-                        color: Colors.red,
+                        color: Color.fromARGB(255, 219, 23, 9),
                       ),
                       suffixIcon: IconButton(
                         onPressed: () async {
@@ -172,9 +172,9 @@ class _ChatBotState extends State<ChatBot> {
                           getResponse(mesageSend);
 
                         },
-                        icon: Icon(Icons.mic, color: Colors.red),
+                        icon: Icon(Icons.mic, color: Color.fromARGB(255, 219, 26, 12)),
                       ),
-                      hintText: "Text Here",
+                      hintText: "Type Here",
                       fillColor: Colors.white12,
                     ),
                     controller: queryController,
@@ -247,7 +247,7 @@ Widget buildItem(String item, Animation animation, int index) {
             item.replaceAll("<bot>", ""),
             style: TextStyle(color: mine ? Colors.white : Colors.black),
           ),
-          color: mine ? Colors.red : Colors.grey[200],
+          color: mine ? Color.fromARGB(255, 214, 22, 8) : Colors.grey[200],
           padding: const BubbleEdges.all(10),
         ),
       ),
