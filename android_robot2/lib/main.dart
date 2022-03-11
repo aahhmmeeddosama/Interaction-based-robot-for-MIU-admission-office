@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
 
       //home: TTS(),
       //home: SpeechScreen(),
-      //home: Admission(),
-      home: Welcome_screen(),
+      home: Admission(),
+      //home: Welcome_screen(),
       //home:IdentifyUser()
       //home: Staff(),
       //home: Add_Q_A(),

@@ -47,7 +47,7 @@ class _Welcome_screenState extends State<Welcome_screen> {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
             child: Text(
-              'Welcome on MIU!',
+              'Welcome to MIU!',
               style: TextStyle(
                 fontSize: 45.0,
                 fontFamily: "arial",
