@@ -5,17 +5,12 @@ import 'package:flutter/material.dart';
 import 'add_q_a.dart';
 import 'identify_user.dart';
 import 'welcome_screen.dart';
-import 'zzzzzzzzz.dart';
-
 
 Future<void> main() async {
-
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,7 +25,6 @@ class MyApp extends StatelessWidget {
       //home: Add_Q_A(),
       //home: Delete(),
       //home: Edit(),
-
     );
   }
 }
