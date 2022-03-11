@@ -36,7 +36,7 @@ class _State extends State<Edit_Q_A> {
     return Scaffold(  
         appBar: AppBar(  
           title: Text('Edit to flutter'),
-          backgroundColor: Color.fromARGB(255, 189, 14, 14), 
+          backgroundColor: Color.fromARGB(255, 189, 14, 14),
         ),  
         body: Padding(  
             padding: EdgeInsets.all(15),  
@@ -51,10 +51,6 @@ class _State extends State<Edit_Q_A> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Padding(
-            padding: const EdgeInsets.fromLTRB(30, 10, 50, 20),
-            child: Image.asset('assets/images/logo_miu.png'),
-          ),
                 Padding(  
                   padding: EdgeInsets.all(15),  
                   child: TextField(
@@ -62,9 +58,13 @@ class _State extends State<Edit_Q_A> {
 
 
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),  
-                      labelText: 'index',
-                      hintText: 'Add',  
+                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
+                        borderSide:  BorderSide(color: Colors.red ),),
+                      labelText: 'Index',
+                      hintText: 'Write Index',
+                      labelStyle: TextStyle(
+                        color: Colors.black54,
+                      ),
                     ),  
                   ),  
                 ),  
@@ -74,10 +74,14 @@ class _State extends State<Edit_Q_A> {
                     controller: myController2,
 
 //                      url +='&tag=' + value.toString();
-                    decoration: InputDecoration(  
-                      border: OutlineInputBorder(),  
-                      labelText: 'tag',
-                      hintText: 'Edit Question',
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
+                        borderSide:  BorderSide(color: Colors.red ),),
+                      labelText: 'Tag',
+                      hintText: 'Edit Tag',
+                      labelStyle: TextStyle(
+                        color: Colors.black54,
+                      ),
                     ),  
                   ),  
                 ),  
@@ -85,12 +89,15 @@ class _State extends State<Edit_Q_A> {
                   padding: EdgeInsets.all(15),  
                   child: TextField(
                     controller: myController3,
-//url +='&pattern=' + value.toString();
-                    obscureText: true,  
-                    decoration: InputDecoration(  
-                      border: OutlineInputBorder(),  
-                      labelText: 'pattern',
-                      hintText: 'Enter answer for the question',  
+
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
+                        borderSide:  BorderSide(color: Colors.red ),),
+                      labelText: 'Pattern',
+                      hintText: 'Edit Pattern',
+                      labelStyle: TextStyle(
+                        color: Colors.black54,
+                      ),
                     ),  
                   ),  
                 ),  
@@ -98,12 +105,14 @@ class _State extends State<Edit_Q_A> {
                   padding: EdgeInsets.all(15),  
                   child: TextField(
                     controller: myController4,
-                    //                      url +='&response=' + value.toString()+'&context=kllk';
-                    obscureText: true,  
-                    decoration: InputDecoration(  
-                      border: OutlineInputBorder(),  
-                      labelText: 'Write response',
-                      hintText: 'Optional',  
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
+                        borderSide:  BorderSide(color: Colors.red ),),
+                      labelText: 'Response',
+                      hintText: 'add Response',
+                      labelStyle: TextStyle(
+                        color: Colors.black54,
+                      ),
                     ),  
                   ),  
                 ),
@@ -113,7 +122,7 @@ class _State extends State<Edit_Q_A> {
                           primary: Colors.red[700], // background
                           onPrimary: Colors.white, // foreground
                            minimumSize: Size(120,50),
-                           shape: StadiumBorder(),
+                            shape: StadiumBorder(),
                         ),
                   onPressed: () async {
                           myController1;

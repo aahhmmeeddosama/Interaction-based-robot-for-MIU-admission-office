@@ -35,13 +35,32 @@ class _IdentifyUserState extends State<IdentifyUser> {
     ageResponse = await apif("http://192.168.1.10:8000/age",selectImage);
     genResponse = await apif("http://192.168.1.10:8000/gender",selectImage);
 
+    Route _createRoute2() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => ChatBot(recoResponse!,emoResponse!,ageResponse!,genResponse!),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.5, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.easeInCirc;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
+
+
 
     setState(() {});
     if (recoResponse=='Ahmed')
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>  Admission()));
+      Navigator.of(context).push(_createRoute());
 
     else
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> ChatBot(recoResponse!,emoResponse!,ageResponse!,genResponse!)));
+      Navigator.of(context).push(_createRoute2());
   }
 
 
@@ -87,4 +106,21 @@ class _IdentifyUserState extends State<IdentifyUser> {
     );
 
   }
+}
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const Admission(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.5, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.easeInCirc;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }

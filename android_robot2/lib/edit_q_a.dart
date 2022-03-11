@@ -36,7 +36,7 @@ class _State extends State<Edit_Q_A> {
     return Scaffold(  
         appBar: AppBar(  
           title: Text('Edit to flutter'),
-          backgroundColor: Colors.red[700],
+          backgroundColor: Color.fromARGB(255, 189, 14, 14),
         ),  
         body: Padding(  
             padding: EdgeInsets.all(15),  
@@ -121,7 +121,8 @@ class _State extends State<Edit_Q_A> {
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red[700], // background
                           onPrimary: Colors.white, // foreground
-                           minimumSize: Size(200,50),
+                           minimumSize: Size(120,50),
+                            shape: StadiumBorder(),
                         ),
                   onPressed: () async {
                           myController1;
@@ -142,7 +143,7 @@ class _State extends State<Edit_Q_A> {
                       QueryText = Data['delete'] ;
                     });*/
                   },
-                        child: Text('Submit'),
+                        child: Text('Submit',style: TextStyle(fontSize: 20)),
                       )
               ],  
             )  

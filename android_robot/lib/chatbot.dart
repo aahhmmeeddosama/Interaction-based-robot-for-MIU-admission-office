@@ -1,21 +1,27 @@
 import 'dart:convert' show jsonDecode;
 import 'package:bubble/bubble.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:flutter_speech/flutter_speech.dart';
 import 'package:http/http.dart' as http;
 
-class ChatBot extends StatefulWidget {
-  const ChatBot({Key? key}) : super(key: key);
 
+import 'camerax.dart';
+
+class ChatBot extends StatefulWidget {
+  final String recoResponse; final String emoResponse; final String ageResponse; final String genResponse;
+
+  const ChatBot(this.recoResponse,this.emoResponse,this.ageResponse,this.genResponse,{Key? key}) : super(key: key);
   @override
-  _ChatBotState createState() => _ChatBotState();
+  _ChatBotState createState() => _ChatBotState(this.recoResponse,this.emoResponse,this.ageResponse,this.genResponse,);
 }
 enum TtsState { playing }
 
 const languages = const [
   const Language('Arabic', 'ar-EG'),
+  const Language('English', 'en-US'),
 ];
 
 class Language {
@@ -27,8 +33,12 @@ class Language {
 
 
 class _ChatBotState extends State<ChatBot> {
+  final String recoResponse; final String emoResponse; final String ageResponse; final String genResponse;
+  _ChatBotState(this.recoResponse,this.emoResponse,this.ageResponse,this.genResponse,);
+
 
   String mesageSend = '';
+  late String a;
 
   ////////////////////////////////////////////////////////////
 
@@ -37,9 +47,7 @@ class _ChatBotState extends State<ChatBot> {
   //String _currentLocale = 'en_US';
   Language selectedLang = languages.first;
 
-  void activateSpeechRecognizer() {
-    _speech = SpeechRecognition();
-  }
+
 
 
 
@@ -50,7 +58,7 @@ class _ChatBotState extends State<ChatBot> {
   final List<String> _data = [];
   String? nurl;
   static const String BOT_URL =
-      "http://192.168.1.11:5000/bot?message=";
+      "http://192.168.1.10:5000/bot?message=";
   TextEditingController queryController = TextEditingController();
 
   //////////////////////////////////////////
@@ -62,70 +70,17 @@ class _ChatBotState extends State<ChatBot> {
   double rate = 0.5;
   bool isCurrentLanguageInstalled = false;
 
+
   String? _newVoiceText="hello how can i help you";
 
   TtsState ttsState = TtsState.playing;
 
+
   get isPlaying => ttsState == TtsState.playing;
 
-  //////////////////////////////////////////////
 
 
 
-
-  @override
-  initState() {
-    super.initState();
-    initTts();
-    activateSpeechRecognizer();
-  }
-
-  initTts() {
-    flutterTts = FlutterTts();
-    _setAwaitOptions();
-    flutterTts.setStartHandler(() {
-      setState(() {
-        print("Playing");
-        ttsState = TtsState.playing;
-      });
-    });
-
-  }
-
-
-  Future _speak(String message) async {
-    await flutterTts.setVolume(volume);
-    await flutterTts.setSpeechRate(rate);
-    await flutterTts.setPitch(pitch);
-
-    if (message != null) {
-      if (message.isNotEmpty) {
-        initTts();
-        await flutterTts.speak(message);
-
-      }
-    }
-  }
-
-  Future _setAwaitOptions() async {
-    await flutterTts.awaitSpeakCompletion(true);
-  }
-
-  Widget _btnSection() {
-
-    return Container(
-        padding: EdgeInsets.only(top: 50.0),
-        child:
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-
-        ]));
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    flutterTts.stop();
-  }
 
 
 
@@ -160,7 +115,7 @@ class _ChatBotState extends State<ChatBot> {
                     decoration: InputDecoration(
                       icon: Icon(
                         Icons.message,
-                        color: Color.fromARGB(255, 219, 23, 9),
+                        color: Colors.red,
                       ),
                       suffixIcon: IconButton(
                         onPressed: () async {
@@ -172,9 +127,9 @@ class _ChatBotState extends State<ChatBot> {
                           getResponse(mesageSend);
 
                         },
-                        icon: Icon(Icons.mic, color: Color.fromARGB(255, 219, 26, 12)),
+                        icon: Icon(Icons.mic, color:Color.fromARGB(255, 214, 22, 8)),
                       ),
-                      hintText: "Type Here",
+                      hintText: "Text Here",
                       fillColor: Colors.white12,
                     ),
                     controller: queryController,
@@ -210,6 +165,7 @@ class _ChatBotState extends State<ChatBot> {
           print(response.body);
           var data = response;
           data.toString();
+
           insertSingleItem(data.body + "<bot>");
           _speak(data.body );
 
@@ -231,26 +187,86 @@ class _ChatBotState extends State<ChatBot> {
   }
 
 
-}
 
-Widget buildItem(String item, Animation animation, int index) {
-  bool mine = item.endsWith("<bot>");
-  dynamic ani = animation;
-  return SizeTransition(
-    sizeFactor: ani,
-    child: Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: Container(
-        alignment: mine ? Alignment.topLeft : Alignment.topRight,
-        child: Bubble(
-          child: Text(
-            item.replaceAll("<bot>", ""),
-            style: TextStyle(color: mine ? Colors.white : Colors.black),
+  @override
+  initState() {
+
+    super.initState();
+
+    _speech = SpeechRecognition();
+    flutterTts = FlutterTts();
+    flutterTts.awaitSpeakCompletion(true);
+    flutterTts.setStartHandler(() {
+      setState(() {
+        print("Playing");
+        ttsState = TtsState.playing;
+      });
+    });
+
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    flutterTts.stop();
+  }
+
+  Future _speak(String message) async {
+
+    if(ageResponse=='(25-32)')
+      setState(() {
+        rate=0.5;
+        pitch=1.0;
+        volume=1.0;
+      });
+
+    await flutterTts.areLanguagesInstalled(["en-AU", "en-US"]);
+    await flutterTts.setVoice({"name": "Karen", "locale": "en-AU"});
+    await flutterTts.setQueueMode(1);
+
+    await flutterTts.setVolume(volume);
+    await flutterTts.setSpeechRate(rate);
+    await flutterTts.setPitch(pitch);
+    if (message != null) {
+      if (message.isNotEmpty) {
+        await flutterTts.speak(message);
+
+      }
+    }
+
+  }
+
+  Widget _btnSection() {
+
+    return Container(
+        padding: EdgeInsets.only(top: 50.0),
+        child:
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+
+        ]));
+  }
+
+  Widget buildItem(String item, Animation animation, int index) {
+    bool mine = item.endsWith("<bot>");
+    dynamic ani = animation;
+    return SizeTransition(
+      sizeFactor: ani,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: Container(
+          alignment: mine ? Alignment.topLeft : Alignment.topRight,
+          child: Bubble(
+            child: Text(
+              item.replaceAll("<bot>", ""),
+              style: TextStyle(color: mine ? Colors.white : Colors.black),
+            ),
+            color: mine ? Color.fromARGB(255, 214, 22, 8) : Colors.grey[200],
+            padding: const BubbleEdges.all(10),
           ),
-          color: mine ? Color.fromARGB(255, 214, 22, 8) : Colors.grey[200],
-          padding: const BubbleEdges.all(10),
         ),
       ),
-    ),
-  );
+    );
+  }
+
+
 }

@@ -12,9 +12,8 @@ class Admission extends StatelessWidget {
               title: const Text('Admission staff'),
               backgroundColor: Color.fromARGB(255, 189, 14, 14), 
             ),
-            body: ListView(
-              children: [
-                Padding(
+            body: Center(
+              child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
                 child: Column(children: [
                   Text(
@@ -26,11 +25,7 @@ class Admission extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Padding(
-            padding: const EdgeInsets.fromLTRB(30, 10, 50, 20),
-            child: Image.asset('assets/images/logo_miu.png'),
-          ),
-          SizedBox(height: 80,),
+                   SizedBox(height: 80,),
                   Row(
                     children: [
                       SizedBox(width: 10,),
@@ -42,6 +37,7 @@ class Admission extends StatelessWidget {
                           shape: StadiumBorder(),
                         ),
                         onPressed: () {
+                          
                            Navigator.of(context).push(_createRoute());
                         },
                         child: Text('Add',style: TextStyle(fontSize: 20),),
@@ -75,13 +71,9 @@ class Admission extends StatelessWidget {
                       ),
                     ],
                   ),
-                  
-                  
                 ]),
-              ), 
-              ],
-            ),
-            );
+              ),
+            ));
   }
 }
 Route _createRoute() {

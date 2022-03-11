@@ -38,7 +38,7 @@ class _State extends State<Add_Q_A> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Add to flutter'),
-          backgroundColor: Colors.red[700],
+          backgroundColor: Color.fromARGB(255, 189, 14, 14), 
         ),
         body: Form(
           key: formKey,
@@ -136,7 +136,8 @@ class _State extends State<Add_Q_A> {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.red[700], // background
                       onPrimary: Colors.white, // foreground
-                      minimumSize: Size(200,50),
+                      minimumSize: Size(120,50),
+                    shape: StadiumBorder(),
                     ),
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
@@ -164,7 +165,7 @@ class _State extends State<Add_Q_A> {
                       });*/
                       }
                     },
-                    child: Text('Submit'),
+                    child: Text('Submit',style: TextStyle(fontSize: 20)),
                   )
                 ],
               )

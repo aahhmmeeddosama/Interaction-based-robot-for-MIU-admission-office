@@ -4,7 +4,7 @@ import 'package:android_robot/admission_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-
+import 'apif.dart';
 import 'add_q_a.dart';
 import 'chatbot.dart';
 
@@ -18,36 +18,68 @@ class IdentifyUser extends StatefulWidget {
 
 class _IdentifyUserState extends State<IdentifyUser> {
   File? selectImage;
-  String? message="";
+  String? recoResponse="";
+  String? emoResponse="";
+  String? ageResponse="";
+  String? genResponse="";
+
   getImage() async {
     final pickedImage= await ImagePicker().getImage(source: ImageSource.camera);
     selectImage=File(pickedImage!.path);
-    message="";
+    recoResponse="";
     setState(() {
 
     });
+    recoResponse = await apif("http://192.168.1.10:8003/reco",selectImage);
+    emoResponse = await apif("http://192.168.1.10:8003/emotion",selectImage);
+    ageResponse = await apif("http://192.168.1.10:8000/age",selectImage);
+    genResponse = await apif("http://192.168.1.10:8000/gender",selectImage);
+
+    Route _createRoute2() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => ChatBot(recoResponse!,emoResponse!,ageResponse!,genResponse!),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.5, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.easeInCirc;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
+
+
+
+    setState(() {});
+    if (recoResponse=='Ahmed')
+      Navigator.of(context).push(_createRoute());
+
+    else
+      Navigator.of(context).push(_createRoute2());
   }
 
 
 
-  uploadImage() async {
-    final request=http.MultipartRequest("POST", Uri.parse("http://192.168.1.11:8000/reco"));
-    final headers={"content-type": "multipart/from-data"};
-    request.files.add(
-        http.MultipartFile('image', selectImage!.readAsBytes().asStream(),selectImage!.lengthSync(), filename: selectImage!.path.split("/").last)
-    );
-    request.headers.addAll(headers);
-    final response = await request.send();
-    http.Response res = await http.Response.fromStream(response);
-    final resjson= res.body;
-    message =resjson;
+  /*uploadImage() async {
+
+    recoResponse = await apif("http://192.168.1.10:8003/reco",selectImage);
+    emoResponse = await apif("http://192.168.1.10:8003/emotion",selectImage);
+    ageResponse = await apif("http://192.168.1.10:8000/age",selectImage);
+    genResponse = await apif("http://192.168.1.10:8000/gender",selectImage);
+
+
     setState(() {});
-    if (message=="addmision")
+    if (recoResponse=='Ahmed')
       Navigator.push(context, MaterialPageRoute(builder: (context)=>  Admission()));
 
     else
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> const ChatBot()));
-  }
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> ChatBot(recoResponse!,emoResponse!,ageResponse!,genResponse!)));
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -59,22 +91,14 @@ class _IdentifyUserState extends State<IdentifyUser> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(message!),
-            selectImage==null? Text("please pick image to uploade"): Image.file(selectImage!),
-            TextButton.icon(
-                onPressed: uploadImage,
-                icon: Icon(
-                  Icons.upload_file,
-                  color:Colors.red,
-                ),
-                label: Text("upload"),
-              style:TextButton.styleFrom(
-                primary: Colors.red,
-              ),
+            Text(recoResponse!),
+            Text(emoResponse!),
+            Text(ageResponse!),
+            Text(genResponse!),
 
 
+            selectImage==null? Text("please pick image to continue"): Image.file(selectImage!),
 
-            )
           ],
         ),
       ),
@@ -82,4 +106,21 @@ class _IdentifyUserState extends State<IdentifyUser> {
     );
 
   }
+}
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const Admission(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.5, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.easeInCirc;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }

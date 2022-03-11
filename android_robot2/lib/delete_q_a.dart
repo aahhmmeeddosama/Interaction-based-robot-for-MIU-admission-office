@@ -18,7 +18,7 @@ class _State extends State<Delete_Q_A> {
     return Scaffold(  
         appBar: AppBar(  
           title: Text('Delete to flutter'),
-          backgroundColor: Colors.red[700],
+          backgroundColor: Color.fromARGB(255, 189, 14, 14), 
         ),  
         body: Padding(
             padding: EdgeInsets.all(15),  
@@ -63,7 +63,8 @@ class _State extends State<Delete_Q_A> {
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red[700], // background
                           onPrimary: Colors.white, // foreground
-                           minimumSize: Size(200,50),
+                            minimumSize: Size(120,50),
+                           shape: StadiumBorder()
                         ),
                         onPressed: () async {
                           Data = await Getdata(url);
@@ -73,7 +74,7 @@ class _State extends State<Delete_Q_A> {
                           });
                         },
 
-                        child: Text('Submit'),
+                        child: Text('Delete',style: TextStyle(fontSize: 20)),
                       )
               ],
             )

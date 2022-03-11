@@ -127,7 +127,7 @@ class _ChatBotState extends State<ChatBot> {
                           getResponse(mesageSend);
 
                         },
-                        icon: Icon(Icons.mic, color: Colors.red),
+                        icon: Icon(Icons.mic, color:Color.fromARGB(255, 214, 22, 8)),
                       ),
                       hintText: "Text Here",
                       fillColor: Colors.white12,
@@ -260,7 +260,7 @@ class _ChatBotState extends State<ChatBot> {
               item.replaceAll("<bot>", ""),
               style: TextStyle(color: mine ? Colors.white : Colors.black),
             ),
-            color: mine ? Colors.red : Colors.grey[200],
+            color: mine ? Color.fromARGB(255, 214, 22, 8) : Colors.grey[200],
             padding: const BubbleEdges.all(10),
           ),
         ),

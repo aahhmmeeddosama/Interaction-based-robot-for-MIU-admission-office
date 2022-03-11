@@ -2,28 +2,35 @@ import 'package:android_robot/admission_screen.dart';
 import 'package:android_robot/chatbot.dart';
 import 'package:flutter/material.dart';
 
+import 'add_q_a.dart';
 import 'identify_user.dart';
 import 'welcome_screen.dart';
+import 'zzzzzzzzz.dart';
+
 
 Future<void> main() async {
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MIU ADMISSION',
+      debugShowCheckedModeBanner: false,
+
       //home: TTS(),
       //home: SpeechScreen(),
       //home: Admission(),
-      //home: ChatBot(),
       home: Welcome_screen(),
       //home:IdentifyUser()
       //home: Staff(),
-      // home: Add(),
+      //home: Add_Q_A(),
       //home: Delete(),
       //home: Edit(),
+
     );
   }
 }
