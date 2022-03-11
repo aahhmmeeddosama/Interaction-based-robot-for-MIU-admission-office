@@ -6,7 +6,6 @@ import 'chatbot.dart';
 import 'identify_user.dart';
 import 'package:flutter_speech/flutter_speech.dart';
 
-
 const languages = const [
   const Language('Arabic', 'ar-EG'),
   const Language('English', 'en-US'),
@@ -20,7 +19,6 @@ class Language {
 }
 
 class Welcome_screen extends StatefulWidget {
-
   @override
   State<Welcome_screen> createState() => _Welcome_screenState();
 }
@@ -39,17 +37,13 @@ class _Welcome_screenState extends State<Welcome_screen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
-
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
             child: Text(
@@ -66,24 +60,23 @@ class _Welcome_screenState extends State<Welcome_screen> {
             padding: const EdgeInsets.fromLTRB(30, 50, 50, 20),
             child: Image.asset('assets/images/logo_miu.png'),
           ),
-
-           Padding(
+          Padding(
               padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red[700], // background
                   onPrimary: Colors.white, // foreground
                   minimumSize: Size(170, 50),
-                   shape: StadiumBorder(),
+                  shape: StadiumBorder(),
                 ),
                 onPressed: () {
                   setState(() {
                     Navigator.of(context).push(_createRoute());
                   });
                 },
-                child: Text('Start',style: TextStyle(fontSize: 20)),
+                child: Text('Start', style: TextStyle(fontSize: 20)),
               )),
-               Padding(
+          Padding(
             padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
             child: Text(
               'Or',
@@ -95,10 +88,10 @@ class _Welcome_screenState extends State<Welcome_screen> {
               ),
             ),
           ),
-              Padding(
+          Padding(
             padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
             child: Text(
-              ' say:  "HI ROBOT"',
+              ' say:  "Hey Pepper"',
               style: TextStyle(
                 fontSize: 25.0,
                 fontFamily: "arial",
@@ -113,31 +106,28 @@ class _Welcome_screenState extends State<Welcome_screen> {
   }
 
   void start() => _speech.activate(selectedLang.code).then((_) {
-    return _speech.listen().then((result) {
-      setState(() {
-        _isListening = result;
+        return _speech.listen().then((result) {
+          setState(() {
+            _isListening = result;
+          });
+        });
       });
-    });
-  });
 
   void cancel() =>
       _speech.cancel().then((_) => setState(() => _isListening = false));
 
   void stop() => _speech.stop().then((_) {
-    setState(() => _isListening = false);
-  });
+        setState(() => _isListening = false);
+      });
 
   void onSpeechAvailability(bool result) {
     setState(() => _speechRecognitionAvailable = result);
-    if( transcription=="hello robot") {
+    if (transcription == "hey pepper") {
       dispose();
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const IdentifyUser()));
-    }
-
-    else
+    } else
       start();
-
   }
 
   void onRecognitionStarted() {
@@ -175,7 +165,6 @@ class _Welcome_screenState extends State<Welcome_screen> {
     super.dispose();
   }
 
-
   Future<void> camx() async {
     // Ensure that plugin services are initialized so that `availableCameras()`
     // can be called before `runApp()`
@@ -192,12 +181,12 @@ class _Welcome_screenState extends State<Welcome_screen> {
       camera: firstCamera,
     );
   }
-
 }
 
 Route _createRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const IdentifyUser(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const IdentifyUser(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.5, 0.0);
       const end = Offset.zero;
