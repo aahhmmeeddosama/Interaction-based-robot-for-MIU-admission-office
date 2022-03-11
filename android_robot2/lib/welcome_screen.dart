@@ -91,7 +91,7 @@ class _Welcome_screenState extends State<Welcome_screen> {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
             child: Text(
-              ' say:  "Hey Pepper"',
+              'Please say: "Hey Pepper"',
               style: TextStyle(
                 fontSize: 25.0,
                 fontFamily: "arial",
