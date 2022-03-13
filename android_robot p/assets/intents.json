@@ -1,0 +1,47 @@
+{
+        "intents": [
+                {
+                        "tag": "greeting",
+                        "patterns": [
+                                "Hi there",
+                                "How are you",
+                                "Is anyone there ?",
+                                "Hey",
+                                "Hola",
+                                "Hello",
+                                "Good day"
+                        ],
+                        "responses": [
+                                "Hello, How can i help you ",
+                                "Hello, you need some help ",
+                                "Hi there, how can I help "
+                        ]
+                },
+                {
+                        "tag": "Studying",
+                        "patterns": [
+                                "where i can study in quite place",
+                                "I want to use the computer"
+                        ],
+                        "responses": [
+                                "You can go to the library",
+                                "In the library it is located in last floor of the main building",
+                                "In library it is located in last floor of the N building"
+                        ]
+                },
+                {
+                        "tag": "Injured",
+                        "patterns": [
+                                "I am injured where i can go",
+                                "I am having a headache",
+                                "I feel that i am not stable"
+                        ],
+                        "responses": [
+                                "You have to go to the clinc",
+                                "Go to the clinc at the main building first floor",
+                                "Tell the doctor or nurse found at the clinc "
+                        ]
+
+                }
+        ]
+}
