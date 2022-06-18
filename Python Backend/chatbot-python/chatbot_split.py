@@ -1,7 +1,10 @@
-import time
+from datetime import time, datetime
+
 import nltk
-#nltk.download()
 from nltk.stem import WordNetLemmatizer
+
+from chatbot.constants.constants import ip
+
 lemmatizer = WordNetLemmatizer()
 import pickle
 import numpy as np
@@ -9,8 +12,7 @@ from keras.models import load_model
 import json
 import random
 import os
-# import jsonify
-# import mysql.connector
+import jsonify
 
 import pyrebase
 from firebase_admin import credentials, initialize_app, storage
@@ -28,16 +30,9 @@ en_intents = json.loads(open('intents.json').read())
 en_words = pickle.load(open('words_en.pkl', 'rb'))
 en_classes = pickle.load(open('classes_en.pkl', 'rb'))
 from langdetect import detect
-from flask import Flask, request, jsonify
-from datetime import datetime
+from flask import Flask, request
 
 app = Flask(__name__)
-
-# con = mysql.connector.connect(
-#     user = "root",
-#     password = "",
-#     host = "localhost",
-#     database = "pepperrobot")
 
 def iniate_storedchats():
     #counter of questions to show where i am
@@ -168,22 +163,9 @@ def selectchat_firebase():
         for i in files_listt:
             files_list.append(i.strip())
     print(files_list)
+    print(files_list)
     #returns the list which contains the file names
     return files_list
-
-@app.route('/chats', methods=['GET'])
-def ReadLogs():
-    with open(Logsfilename, "r") as Logfile:
-        files_listt = Logfile.readlines()
-        files_list = []
-        #removes \n from the list
-        for i in files_listt:
-            files_list.append(i.strip())
-    print(files_list)
-    chats = []
-    for j in files_list:
-        chats.append(j)
-    return jsonify(chats)
 
 def readchat_firebase():
     config = iniate_firebase()
@@ -221,69 +203,29 @@ def readchat_firebase():
             list.append(i.strip())
     print(list)
 
-    # with open(selectedfilename, "r") as downloadedfile:
-    #     listt = downloadedfile.readlines()
-    #     list = []
-    #     listtt = []
-    #     # removes \n from the list
-    #     for i in listt:
-    #         list.append(i.strip())
-    #
-    #     for i in list:
-    #         for j in i:
-    #             listtt
-
-
-
-# def allchats_firebase():
-#     config = iniate_firebase()
-#     firebase = pyrebase.initialize_app(config)
-#     storage = firebase.storage()
-#     # download saved chat file from our firebase
-#     # first filename that will be saved in our storage
-#     # then the file itself
-#     urlfilename = storage.child(uploadfilename).get_url(uploadfilename)
-#     chats_url_Dict[uploadfilename] = urlfilename
-#     # with open("Logs.txt", "a") as Logfile:
-#     #     for key, value in chats_url_Dict.items():
-#     #         Logfile.write('%s$#%s\n' % (key, value))
-
-#upload saved chat file to our firebase
-# def upload_stored_chat(uploadfilename):
-#     fileName = 'uploadfilename'
-#     bucket = storage.bucket()
-#     blob = bucket.blob(fileName)
-#     blob.upload_from_filename(fileName)
-#     blob.make_public()
-
 @app.route('/bot', methods=['GET', 'POST'])
 # To restore the sentence location  by empty
 def chatbot():
     sentence = str(request.args['message'])
 
-    # cursor = con.cursor()
-    # word = input("")
-    # word =  word.lower()
-    # query = cursor.execute("SELECT * FROM 'chats' WHERE 'word' = ")
-
-    #when the user presses the back button, it automatically ends bye message
-    #then it store all of the chat (user's dictonairy) in txt file
-    #then it rests the dictonairy
+    # when the user presses the back button, it automatically ends bye message
+    # then it store all of the chat (user's dictonairy) in txt file
+    # then it rests the dictonairy
     if (sentence == "Bye"):
         storedfilechats()
         update_logs_firebase()
         uploadchat_firebase()
-        #selectchat_firebase()
+        # selectchat_firebase()
         readchat_firebase()
         time.sleep(1)
         destruct_local_files()
         # allchats_firebase()
         storedchat_number + 1
-        #upload_stored_chat(uploadfilename)
+        # upload_stored_chat(uploadfilename)
         iniate_storedchats()
 
     def clean_up_sentence(sentence):
-        #current arabic question
+        # current arabic question
         global storedchat_currentquestion
         storedchat_currentquestion = sentence
         sentence_words = nltk.word_tokenize(sentence)
@@ -291,7 +233,7 @@ def chatbot():
         return sentence_words
 
     def clean_up_sentence_en(sentence):
-        #current english question
+        # current arabic question
         global storedchat_currentquestion
         storedchat_currentquestion = sentence
         sentence_words = nltk.word_tokenize(sentence)
@@ -377,15 +319,14 @@ def chatbot():
         for i in list_of_intents:
             if (i['tag'] == tag):
                 result = random.choice(i['responses'])
+                break
         return result
 
     def chatbot_response_en(msg):
         ints = predict_class_en(msg, model_en)
         res = getResponse_en(ints, en_intents)
-        storedchats(res)
         for key, value in storedchat_Dict.items():
             print('User:', key, '\nBot:', value)
-        #print(chats_url_Dict, '\n')
         return res
 
     def chatbot_response(msg):
@@ -413,14 +354,14 @@ def chatbot():
     if trya == 'ar':
         res = chatbot_response(msg)
         result = arabic_reshaper.reshape(res)
-        a = result.encode('utf-8')
-        #d['message'] = [t.encode('utf-8') for t in res]
-        return a
+        a = result.encode('UTF-8')
+        d['message'] = a
+        return result+'+ar-SA'
     else:
         res = chatbot_response_en(msg)
-        d['message'] = res
-        return res
+
+        return res+'+en-AU'
+
 
 if __name__ == '__main__':
-    iniate_storedchats()
-    app.run(host='192.168.0.131', port=5000)
+    app.run(host=ip, port=5000)
