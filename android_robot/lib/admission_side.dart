@@ -1,12 +1,14 @@
+import 'package:android_robot/constants/app_color.dart';
+import 'package:android_robot/video.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'add_q_a.dart';
-import 'delete_q_a.dart';
-import 'edit_q_a.dart';
+import 'add_to_dataset.dart';
+import 'delete_from_dataset.dart';
+import 'edit_from_dataset.dart';
 
-class Admission extends StatelessWidget {
+class AdmissionSide extends StatelessWidget {
   String arabicurl = 'http://192.168.0.131:8005/';
   String englishurl = 'http://192.168.0.131:8002/';
 
@@ -19,71 +21,89 @@ class Admission extends StatelessWidget {
             'Admission staff',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 30,
               fontFamily: "Times New Roman",
               fontWeight: FontWeight.bold,
             ),
           ),
-          backgroundColor: Colors.red[700],
+          backgroundColor: MyColors.myRed,
         ),
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(40, 200, 40, 40),
+            padding: const EdgeInsets.fromLTRB(40, 100, 40, 40),
             child: Column(children: [
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(
                   'Access responses',
                   style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.black,
+                    fontSize: 50,
+                    color: MyColors.myBlack,
                     fontFamily: "Times New Roman",
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.fromLTRB(0, 50, 0, 50),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.red[700], // background
-                      onPrimary: Colors.white, // foreground
-                      minimumSize: Size(200, 50),
+                      primary: MyColors.myRed, // background
+                      onPrimary: MyColors.myWhite,
+                      minimumSize: Size(200, 70), // foreground
+                      shape: StadiumBorder(),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VideoScreen()));
+                    },
+                    child:
+                        Text('Add New Admin', style: TextStyle(fontSize: 30)),
+                  )),
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 100, 0, 50),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: MyColors.myRed, // background
+                      onPrimary: MyColors.myWhite, // foreground
+                      minimumSize: Size(200, 70),
                       shape: StadiumBorder(),
                     ),
                     onPressed: () {
                       showAlertDialogAdd(context);
                     },
-                    child: Text('Add'),
+                    child: Text('Add', style: TextStyle(fontSize: 30)),
                   )),
               Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.fromLTRB(0, 50, 0, 50),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.red[700], // background
-                      onPrimary: Colors.white, // foreground
-                      minimumSize: Size(200, 50),
+                      primary: MyColors.myRed, // background
+                      onPrimary: MyColors.myWhite, // foreground
+                      minimumSize: Size(200, 70),
                       shape: StadiumBorder(),
                     ),
                     onPressed: () {
                       showAlertDialogEdit(context);
                     },
-                    child: Text('Edit'),
+                    child: Text('Edit', style: TextStyle(fontSize: 30)),
                   )),
               Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.fromLTRB(0, 50, 0, 50),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.red[700], // background
-                      onPrimary: Colors.white,
-                      minimumSize: Size(200, 50), // foreground
+                      primary: MyColors.myRed, // background
+                      onPrimary: MyColors.myWhite,
+                      minimumSize: Size(200, 70), // foreground
                       shape: StadiumBorder(),
                     ),
                     onPressed: () {
                       showAlertDialogDelete(context);
                       //Navigator.push(context, MaterialPageRoute(builder: (context)=>  Delete_Q_A()));
                     },
-                    child: Text('Delete'),
+                    child: Text('Delete', style: TextStyle(fontSize: 30)),
                   )),
             ]),
           ),
@@ -96,7 +116,7 @@ class Admission extends StatelessWidget {
       style: TextButton.styleFrom(
         shape: const StadiumBorder(),
       ),
-      child: Text("Arabic", style: TextStyle(color: Colors.red[700])),
+      child: Text("Arabic", style: TextStyle(color: MyColors.myRed)),
       onPressed: () {
         Navigator.push(
           context,
@@ -106,13 +126,13 @@ class Admission extends StatelessWidget {
             duration: Duration(milliseconds: 500),
             reverseDuration: Duration(milliseconds: 300),
             alignment: Alignment.topCenter,
-            child: Delete_Q_A(arabicurl),
+            child: DeleteFromDataset(arabicurl),
           ),
         );
       },
     );
     Widget englishButton = TextButton(
-      child: Text("English", style: TextStyle(color: Colors.red[700])),
+      child: Text("English", style: TextStyle(color: MyColors.myRed)),
       onPressed: () {
         Navigator.push(
           context,
@@ -122,13 +142,13 @@ class Admission extends StatelessWidget {
             duration: Duration(milliseconds: 500),
             reverseDuration: Duration(milliseconds: 300),
             alignment: Alignment.topCenter,
-            child: Delete_Q_A(englishurl),
+            child: DeleteFromDataset(englishurl),
           ),
         );
       },
     );
     Widget cancelButton = TextButton(
-      child: Text("Cancel", style: TextStyle(color: Colors.red[700])),
+      child: Text("Cancel", style: TextStyle(color: MyColors.myRed)),
       onPressed: () {
         Navigator.of(context).pop();
       },
@@ -147,7 +167,7 @@ class Admission extends StatelessWidget {
         "which dataset you need to access 'Arabic' OR 'English' ",
         style: TextStyle(
           fontSize: 20,
-          color: Colors.black,
+          color: MyColors.myBlack,
           fontFamily: "Times New Roman",
         ),
       ),
@@ -170,7 +190,7 @@ class Admission extends StatelessWidget {
   showAlertDialogAdd(BuildContext context) {
     // set up the buttons
     Widget arabicButton = TextButton(
-      child: Text("Arabic", style: TextStyle(color: Colors.red[700])),
+      child: Text("Arabic", style: TextStyle(color: MyColors.myRed)),
       onPressed: () {
         Navigator.push(
           context,
@@ -180,12 +200,12 @@ class Admission extends StatelessWidget {
               duration: Duration(milliseconds: 500),
               reverseDuration: Duration(milliseconds: 300),
               alignment: Alignment.topCenter,
-              child: Add_Q_A(arabicurl)),
+              child: AddToDataset(arabicurl)),
         );
       },
     );
     Widget englishButton = TextButton(
-      child: Text("English", style: TextStyle(color: Colors.red[700])),
+      child: Text("English", style: TextStyle(color: MyColors.myRed)),
       onPressed: () {
         Navigator.push(
           context,
@@ -195,13 +215,13 @@ class Admission extends StatelessWidget {
             duration: Duration(milliseconds: 500),
             reverseDuration: Duration(milliseconds: 300),
             alignment: Alignment.topCenter,
-            child: Add_Q_A(englishurl),
+            child: AddToDataset(englishurl),
           ),
         );
       },
     );
     Widget cancelButton = TextButton(
-      child: Text("Cancel", style: TextStyle(color: Colors.red[700])),
+      child: Text("Cancel", style: TextStyle(color: MyColors.myRed)),
       onPressed: () {
         Navigator.of(context).pop();
       },
@@ -220,7 +240,7 @@ class Admission extends StatelessWidget {
         "which dataset you need to access 'Arabic' OR 'English' ",
         style: TextStyle(
           fontSize: 20,
-          color: Colors.black,
+          color: MyColors.myBlack,
           fontFamily: "Times New Roman",
         ),
       ),
@@ -243,7 +263,7 @@ class Admission extends StatelessWidget {
   showAlertDialogEdit(BuildContext context) {
     // set up the buttons
     Widget arabicButton = TextButton(
-      child: Text("Arabic", style: TextStyle(color: Colors.red[700])),
+      child: Text("Arabic", style: TextStyle(color: MyColors.myRed)),
       onPressed: () {
         Navigator.push(
           context,
@@ -253,13 +273,13 @@ class Admission extends StatelessWidget {
             duration: Duration(milliseconds: 500),
             reverseDuration: Duration(milliseconds: 300),
             alignment: Alignment.topCenter,
-            child: Edit_Q_A(arabicurl),
+            child: EditFromDataset(arabicurl),
           ),
         );
       },
     );
     Widget englishButton = TextButton(
-      child: Text("English", style: TextStyle(color: Colors.red[700])),
+      child: Text("English", style: TextStyle(color: MyColors.myRed)),
       onPressed: () {
         Navigator.push(
           context,
@@ -269,13 +289,13 @@ class Admission extends StatelessWidget {
             duration: Duration(milliseconds: 500),
             reverseDuration: Duration(milliseconds: 300),
             alignment: Alignment.topCenter,
-            child: Edit_Q_A(englishurl),
+            child: EditFromDataset(englishurl),
           ),
         );
       },
     );
     Widget cancelButton = TextButton(
-      child: Text("Cancel", style: TextStyle(color: Colors.red[700])),
+      child: Text("Cancel", style: TextStyle(color: MyColors.myRed)),
       onPressed: () {
         Navigator.of(context).pop();
       },
@@ -294,7 +314,7 @@ class Admission extends StatelessWidget {
         "which dataset you need to access 'Arabic' OR 'English' ",
         style: TextStyle(
           fontSize: 20,
-          color: Colors.black,
+          color: MyColors.myBlack,
           fontFamily: "Times New Roman",
         ),
       ),
