@@ -4,80 +4,106 @@ import 'dart:convert';
 
   
 class Delete_Q_A extends StatefulWidget {
+  String URL;
+  Delete_Q_A(this.URL);
+
   @override  
-  _State createState() => _State();  
+  _State createState() => _State(URL);
 }  
   
 class _State extends State<Delete_Q_A> {
+  var formKey = GlobalKey<FormState>();
+
   @override
+  String URL;
   String? url;
   var Data;
   String QueryText = 'delete';
 
+
+
+  _State(this.URL);
+
   Widget build(BuildContext context) {  
     return Scaffold(  
-        appBar: AppBar(  
-          title: Text('Delete to flutter'),
-          backgroundColor: Color.fromARGB(255, 189, 14, 14), 
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Delete Question'),
+          backgroundColor: Colors.red[700],
         ),  
-        body: Padding(
-            padding: EdgeInsets.all(15),  
-            child: Column(  
-              children: <Widget>[  
-                 Text(
-                    'Delete Question',
-                    style: TextStyle(
-                      fontSize: 25.0,
-                      color: Colors.black,
-                      fontFamily: "arial",
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                Padding(  
-                  padding: EdgeInsets.all(15),  
-                  child: TextField(
-                    onChanged: (value) {
-                      url = 'http://192.168.1.11:8003/bot?delete=' + value.toString();
-                    },
-
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
-                        borderSide:  BorderSide(color: Colors.red ),),
-                      labelText: 'Delete tag',
-                        labelStyle: TextStyle(
-                          color: Colors.red[700],
-                        ),
-
-                    ),  
-                  ),  
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    QueryText,
-                    style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-                  ),
-                ),/////////////
-
-                ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red[700], // background
-                          onPrimary: Colors.white, // foreground
-                            minimumSize: Size(120,50),
-                           shape: StadiumBorder()
-                        ),
-                        onPressed: () async {
-                          Data = await Getdata(url);
-
-                          setState(() {
-                            QueryText = Data['delete'] ;
-                          });
+        body: SingleChildScrollView(
+          child: Form(
+            key: formKey,
+            child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: <Widget>[
+                     Text(
+                        'enter questions\' index to delete',
+                       style: TextStyle(
+                         fontSize: 20,
+                         color: Colors.black,
+                         fontFamily: "Times New Roman",
+                         fontWeight: FontWeight.bold,
+                       ),
+                      ),
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: TextFormField(
+                        onChanged: (value) {
+                          url = URL+'bot?delete=' + value.toString();
                         },
+                        keyboardType:
+                        TextInputType.number, //keyboard bytft7 3ala numbers
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
+                            borderSide:  BorderSide(color: Colors.red ),),
+                          labelText: 'Delete index',
+                          hintText: 'ُEnter index',
+                            labelStyle: TextStyle(
+                              color: Colors.red[700],
+                            ),
 
-                        child: Text('Delete',style: TextStyle(fontSize: 20)),
-                      )
-              ],
-            )
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please write Index that you want to delete';
+                          } else if (value.length > 3) {
+                            return 'Minimum 3 characters';
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ),
+
+
+                    Padding(
+                      padding: const EdgeInsets.all(50),
+                      child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red[700], // background
+                                onPrimary: Colors.white, // foreground
+                                 minimumSize: Size(200,50),
+                                shape: StadiumBorder(),
+                              ),
+                              onPressed: () async {
+                                if (formKey.currentState!.validate()) {
+                                  Data = await Getdata(url);
+
+                                  setState(() {
+                                    QueryText = Data['delete'];
+                                  });
+                                }
+                              },
+
+                              child: Text('Submit'),
+                            ),
+                    )
+                  ],
+                )
+            ),
+          ),
         ) ,
 
     );  
