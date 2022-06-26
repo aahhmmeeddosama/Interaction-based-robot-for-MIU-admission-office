@@ -3,14 +3,18 @@ import 'package:flutter/material.dart';
 import 'API.dart';
   
 class Edit_Q_A extends StatefulWidget {
+  String URL;
+  Edit_Q_A(this.URL);
   @override  
-  _State createState() => _State();  
-}  
-  
-class _State extends State<Edit_Q_A> {
-  @override
+  _State createState() => _State(URL);
+}
 
-  String url='http://192.168.1.11:8003/';
+class _State extends State<Edit_Q_A> {
+  var formKey = GlobalKey<FormState>();
+
+  @override
+  String URL;
+  String? url;
   String? t;
   var Data;
 
@@ -18,6 +22,8 @@ class _State extends State<Edit_Q_A> {
   final myController2 = TextEditingController();
   final myController3 = TextEditingController();
   final myController4 = TextEditingController();
+
+  _State(this.URL);
 
 
 
@@ -34,119 +40,171 @@ class _State extends State<Edit_Q_A> {
 
   Widget build(BuildContext context) {  
     return Scaffold(  
-        appBar: AppBar(  
-          title: Text('Edit to flutter'),
-          backgroundColor: Color.fromARGB(255, 189, 14, 14),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Edit Question'),
+          backgroundColor: Colors.red[700],
         ),  
-        body: Padding(  
-            padding: EdgeInsets.all(15),  
-            child: Column(  
-              children: <Widget>[  
-                 Text(
-                    'Edit Question',
-                    style: TextStyle(
-                      fontSize: 25.0,
-                      color: Colors.black,
-                      fontFamily: "arial",
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                Padding(  
-                  padding: EdgeInsets.all(15),  
-                  child: TextField(
-                    controller: myController1,
-
-
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
-                        borderSide:  BorderSide(color: Colors.red ),),
-                      labelText: 'Index',
-                      hintText: 'Write Index',
-                      labelStyle: TextStyle(
-                        color: Colors.black54,
+        body: SingleChildScrollView(
+          child: Form(
+            key: formKey,
+            child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: <Widget>[
+                     Text(
+                        'enter questions\' index then edited data',
+                       textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontFamily: "Times New Roman",
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),  
-                  ),  
-                ),  
-                Padding(  
-                  padding: EdgeInsets.all(15),  
-                  child: TextField(
-                    controller: myController2,
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: TextFormField(
+                        controller: myController1,
+
+
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
+                            borderSide:  BorderSide(color: Colors.red ),),
+                          labelText: 'Index',
+                          hintText: 'Write Index',
+                          labelStyle: TextStyle(
+                            color: Colors.black54,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please add Index';
+                          } else if (value.length > 3) {
+                            return 'Max 3 characters';
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: TextFormField(
+                        controller: myController2,
 
 //                      url +='&tag=' + value.toString();
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
-                        borderSide:  BorderSide(color: Colors.red ),),
-                      labelText: 'Tag',
-                      hintText: 'Edit Tag',
-                      labelStyle: TextStyle(
-                        color: Colors.black54,
-                      ),
-                    ),  
-                  ),  
-                ),  
-                Padding(  
-                  padding: EdgeInsets.all(15),  
-                  child: TextField(
-                    controller: myController3,
-
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
-                        borderSide:  BorderSide(color: Colors.red ),),
-                      labelText: 'Pattern',
-                      hintText: 'Edit Pattern',
-                      labelStyle: TextStyle(
-                        color: Colors.black54,
-                      ),
-                    ),  
-                  ),  
-                ),  
-                 Padding(  
-                  padding: EdgeInsets.all(15),  
-                  child: TextField(
-                    controller: myController4,
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
-                        borderSide:  BorderSide(color: Colors.red ),),
-                      labelText: 'Response',
-                      hintText: 'add Response',
-                      labelStyle: TextStyle(
-                        color: Colors.black54,
-                      ),
-                    ),  
-                  ),  
-                ),
-
-                ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red[700], // background
-                          onPrimary: Colors.white, // foreground
-                           minimumSize: Size(120,50),
-                            shape: StadiumBorder(),
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
+                            borderSide:  BorderSide(color: Colors.red ),),
+                          labelText: 'Tag',
+                          hintText: 'Edit Tag',
+                          labelStyle: TextStyle(
+                            color: Colors.black54,
+                          ),
                         ),
-                  onPressed: () async {
-                          myController1;
-                          myController2;
-                          myController3;
-                          myController4;
-                          String URLL = url+ 'edit?edit='+myController1.text+'&tag='+myController2.text+'&pattern='+myController3.text+'&response='+myController4.text+'&context=kllkj';
-                    Data = await Getdata(URLL);
-                    myController1.clear();
-                    myController2.clear();
-                    myController3.clear();
-                    myController4.clear();
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please add edited Tag';
+                          } else if (value.length > 3) {
+                            return 'Max 3 characters';
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: TextFormField(
+                        controller: myController3,
+
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
+                            borderSide:  BorderSide(color: Colors.red ),),
+                          labelText: 'Pattern',
+                          hintText: 'Edit Pattern',
+                          labelStyle: TextStyle(
+                            color: Colors.black54,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please add edited Pattern';
+                          } else if (!value.contains("*")) {
+                            return 'Must contain *';
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ),
+                     Padding(
+                       padding: EdgeInsets.all(20),
+                      child: TextFormField(
+                        controller: myController4,
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),
+                            borderSide:  BorderSide(color: Colors.red ),),
+                          labelText: 'Response',
+                          hintText: 'add Response',
+                          labelStyle: TextStyle(
+                            color: Colors.black54,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please add edited Response';
+                          } else if (!value.contains("*")) {
+                            return 'Must contain *';
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(50),
+                      child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red[700], // background
+                                onPrimary: Colors.white, // foreground
+                                 minimumSize: Size(200,50),
+                                shape: StadiumBorder(),
+
+                              ),
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            myController1;
+                            myController2;
+                            myController3;
+                            myController4;
+                            String url = URL + 'edit?edit=' + myController1.text +
+                                '&tag=' + myController2.text + '&pattern=' +
+                                myController3.text + '&response=' +
+                                myController4.text + '&context=kllkj';
+                            Data = await Getdata(url);
+                            myController1.clear();
+                            myController2.clear();
+                            myController3.clear();
+                            myController4.clear();
 
 
-                          return setState(() {});
+                            return setState(() {});
 
-                    /*setState(() {
-                      QueryText = Data['delete'] ;
-                    });*/
-                  },
-                        child: Text('Submit',style: TextStyle(fontSize: 20)),
-                      )
-              ],  
-            )  
+                            /*setState(() {
+                            QueryText = Data['delete'] ;
+                          });*/
+                          }
+                        },
+                              child: Text('Submit'),
+                            ),
+                    )
+                  ],
+                )
+            ),
+          ),
         )  
     );  
   }  

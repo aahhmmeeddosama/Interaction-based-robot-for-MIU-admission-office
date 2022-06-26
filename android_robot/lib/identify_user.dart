@@ -1,13 +1,15 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:android_robot/admission_screen.dart';
+import 'package:android_robot/admission_side.dart';
+import 'package:android_robot/welcome_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'apif.dart';
-import 'add_q_a.dart';
 import 'chatbot.dart';
+import 'constants/app_color.dart';
+import 'package:page_transition/page_transition.dart';
 
+import 'constants/ip.dart';
 
 class IdentifyUser extends StatefulWidget {
   const IdentifyUser({Key? key}) : super(key: key);
@@ -18,52 +20,51 @@ class IdentifyUser extends StatefulWidget {
 
 class _IdentifyUserState extends State<IdentifyUser> {
   File? selectImage;
-  String? recoResponse="";
-  String? emoResponse="";
-  String? ageResponse="";
-  String? genResponse="";
+  String? recoResponse = "";
+  String? emoResponse = "";
+  String? ageResponse = "";
+  String? genResponse = "";
+  bool detect = true;
+  String message = "Please take a picture to continue";
 
   getImage() async {
-    final pickedImage= await ImagePicker().getImage(source: ImageSource.camera);
-    selectImage=File(pickedImage!.path);
-    recoResponse="";
-    setState(() {
+    final pickedImage = await ImagePicker()
+        .pickImage(source: ImageSource.camera, maxHeight: 246, maxWidth: 246);
+    selectImage = File(pickedImage!.path);
 
-    });
-    recoResponse = await apif("http://192.168.1.10:8003/reco",selectImage);
-    emoResponse = await apif("http://192.168.1.10:8003/emotion",selectImage);
-    ageResponse = await apif("http://192.168.1.10:8000/age",selectImage);
-    genResponse = await apif("http://192.168.1.10:8000/gender",selectImage);
-
-    Route _createRoute2() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => ChatBot(recoResponse!,emoResponse!,ageResponse!,genResponse!),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.5, 0.0);
-      const end = Offset.zero;
-      const curve = Curves.easeInCirc;
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
-}
-
+    recoResponse = await apif(ip+"8003/reco", selectImage);
+    emoResponse = await apif(ip+"8003/emotion", selectImage);
+    ageResponse = await apif(ip+"8000/age", selectImage);
+    genResponse = await apif(ip+"8000/gender", selectImage);
+    print(recoResponse);
+    print(emoResponse);
+    print(ageResponse);
+    print(genResponse);
 
 
     setState(() {});
-    if (recoResponse=='Ahmed')
-      Navigator.of(context).push(_createRoute());
-
-    else
-      Navigator.of(context).push(_createRoute2());
+    if (recoResponse == 'Ahmed') {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => AdmissionSide()));
+    } else if (recoResponse == 'unknown') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChatBot(
+                  recoResponse!, emoResponse!, ageResponse!, genResponse!)));
+    } else if (recoResponse == 'No face Detected' ||
+        emoResponse == 'No face Detected' ||
+        ageResponse == 'No face Detected' ||
+        genResponse == 'No face Detected') {
+      detect = false;
+      setState(() {
+        detect == false
+            ? message =
+                "Please stand upright and try to take another picture to continue"
+            : selectImage = null;
+      });
+    }
   }
-
-
 
   /*uploadImage() async {
 
@@ -85,42 +86,77 @@ class _IdentifyUserState extends State<IdentifyUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        centerTitle: true,
+        title: Text('Identify User', style: TextStyle(fontSize: 30)),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.push(
+            context,
+            PageTransition(
+              curve: Curves.linear,
+              type: PageTransitionType.scale,
+              duration: Duration(milliseconds: 500),
+              reverseDuration: Duration(milliseconds: 300),
+              alignment: Alignment.topCenter,
+              child: Welcome_screen(),
+            ),
+          ),
+        ),
+        backgroundColor: MyColors.myRed,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(recoResponse!),
-            Text(emoResponse!),
-            Text(ageResponse!),
-            Text(genResponse!),
+            selectImage == null
+                ? Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 50),
+                    child: Text(
+                      message,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 40,
+                        color: MyColors.myRed,
+                        fontFamily: "Times New Roman",
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 50),
+                    child: Text(
+                      message,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 25, /////
+                        color: MyColors.myRed,
 
-
-            selectImage==null? Text("please pick image to continue"): Image.file(selectImage!),
-
+                        fontFamily: "Times New Roman",
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: getImage,child: Icon(Icons.add_a_photo ,color:Colors.white),backgroundColor: Colors.red,),
+      // floatingActionButton: FloatingActionButton(
+      //
+      //   onPressed: getImage,
+      //   child: Icon(Icons.add_a_photo, color: Colors.white,
+      //     size: 50.0),
+      //   backgroundColor: Colors.red,
+      // ),
+      floatingActionButton: Container(
+        height: 100.0,
+        width: 100.0,
+        child: FittedBox(
+          child: FloatingActionButton(
+            onPressed: getImage,
+            child: Icon(Icons.add_a_photo, color: MyColors.myWhite, size: 30.0),
+            backgroundColor: MyColors.myRed,
+          ),
+        ),
+      ),
     );
-
   }
-}
-Route _createRoute() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const Admission(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.5, 0.0);
-      const end = Offset.zero;
-      const curve = Curves.easeInCirc;
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
 }
